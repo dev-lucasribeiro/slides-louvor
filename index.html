@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LyricSlide Studio - Projeção de Louvor & Adoração</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Outfit:wght@500;700;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Carregamento Automático do Módulo Externo de Temas -->
+  <!-- Módulo de Temas incorporado inline diretamente no script principal -->
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      user-select: none;
+    }
+
+    .font-outfit { font-family: 'Outfit', sans-serif; }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-serif-classic { font-family: 'Merriweather', serif; }
+    .font-serif-display { font-family: 'Playfair Display', serif; }
+
+    /* Superfície de Projeção com variáveis dinâmicas de temas.js */
+    .bg-stage-surface {
+      background: var(--bg-gradient, #0b0f19);
+      transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .projected-text-color {
+      color: var(--text-color, #ffffff);
+      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.95);
+    }
+
+    .projected-accent-color {
+      color: var(--title-accent, #93c5fd);
+    }
+
+    /* Animações Contínuas do Cenário */
+    @keyframes slowFloat {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
+    }
+    @keyframes gentlePulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 0.95; transform: scale(1.04); }
+    }
+    @keyframes slowRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes waveHorizontal {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(-30px); }
+      100% { transform: translateX(0); }
+    }
+
+    .anim-float { animation: slowFloat 9s ease-in-out infinite; }
+    .anim-pulse-gentle { animation: gentlePulse 8s ease-in-out infinite; }
+    .anim-rotate-slow { animation: slowRotate 75s linear infinite; transform-origin: center; }
+    .anim-wave-slow { animation: waveHorizontal 14s ease-in-out infinite; }
+
+    /* Transições Exclusivas de Texto (Sem reset do fundo SVG) */
+    .trans-fade { animation: textFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes textFade { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: scale(1); } }
+    .trans-slide-up { animation: textSlideUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes textSlideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .trans-cut { animation: none; }
+
+    /* Barra Superior Flutuante (HUD) */
+    .hud-bar { transition: opacity 0.4s ease, transform 0.3s ease; }
+    .hud-idle { opacity: 0.12; }
+    .hud-idle:hover { opacity: 1; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.4); }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.35); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.6); }
+  </style>
+</head>
+
+<body class="h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
+
+    <!-- 0. PÁGINA INICIAL: SELEÇÃO DE MÚSICA / CATÁLOGO (ESTILO ÁGUAS VIVAS & MERRIWEATHER) -->
+  <div id="catalogLayout" class="flex-1 flex flex-col h-full relative overflow-hidden select-none" style="background: radial-gradient(circle at 50% 25%, #06232d 0%, #03141b 55%, #020a0e 100%); color: #ccfbf1;">
+    <!-- Fundo Temático com SVG de Ondas Sutis (Living Water) -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-30">
+      <svg class="w-full h-full absolute inset-0" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="catalogWaterGlow" cx="50%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.18" />
+            <stop offset="65%" stop-color="#0f766e" stop-opacity="0.06" />
+            <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="1000" height="1000" fill="url(#catalogWaterGlow)" />
+        <g class="anim-wave-slow" opacity="0.7">
+          <path d="M-100,560 C150,510 350,610 600,560 C850,510 1050,610 1300,560" fill="none" stroke="rgba(94,234,212,0.25)" stroke-width="3" stroke-linecap="round" />
+          <path d="M-100,620 C150,580 380,670 620,620 C860,570 1080,660 1300,620" fill="none" stroke="rgba(94,234,212,0.18)" stroke-width="2.5" stroke-linecap="round" />
+        </g>
+      </svg>
+    </div>
+
+    <!-- Top Bar Minimalista, Elegante e com Amplo Espaçamento -->
+    <header class="relative z-20 px-6 md:px-12 py-4 flex items-center justify-between shrink-0 border-b border-teal-500/10 backdrop-blur-md bg-[#020a0e]/40">
+      <div class="flex items-center space-x-3">
+        <div class="h-8 w-8 rounded-lg bg-teal-950/80 border border-teal-500/30 flex items-center justify-center text-[#5eead4] shadow-inner">
+          <i class="fa-solid fa-hands-praying text-xs"></i>
+        </div>
+        <span class="font-serif-classic text-xs md:text-sm font-semibold tracking-[0.2em] text-[#ccfbf1] uppercase">
+          Coletânea de Louvor
+        </span>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button id="btnCatalogOpenStudio" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-serif-classic font-medium text-teal-200/90 hover:text-white bg-teal-950/50 hover:bg-teal-900/60 border border-teal-700/40 hover:border-teal-400/60 transition-colors shadow-sm" title="Abrir console do operador">
+          <i class="fa-solid fa-sliders text-xs text-[#5eead4]"></i>
+          <span class="hidden sm:inline">Modo Estúdio</span>
+        </button>
+        <button id="btnCatalogToggleFullscreen" class="p-2 w-8 h-8 flex items-center justify-center rounded-full text-teal-200/90 hover:text-white bg-teal-950/50 hover:bg-teal-900/60 border border-teal-700/40 hover:border-teal-400/60 transition-colors shadow-sm" title="Alternar Tela Cheia [F]">
+          <i class="fa-solid fa-expand text-xs text-[#5eead4]"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Central com Tipografia das Músicas (Merriweather) -->
+    <div class="relative z-10 px-6 md:px-12 pt-7 pb-4 max-w-4xl w-full mx-auto text-center shrink-0">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-500/30 text-[#5eead4] text-[11px] font-serif-classic font-semibold tracking-[0.25em] uppercase mb-2 shadow-sm">
+        <i class="fa-solid fa-water text-[10px]"></i>
+        <span>Adoração & Louvor</span>
+      </div>
+
+      <h2 class="font-serif-classic font-bold text-3xl md:text-4xl text-[#ccfbf1] tracking-wide mb-2" style="text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);">
+        Selecione um Louvor
+      </h2>
+      <p class="text-xs md:text-sm text-teal-200/70 font-serif-classic font-normal max-w-md mx-auto">
+        Toque ou clique em qualquer canção para iniciar a projeção no telão.
+      </p>
+
+      <!-- Campo de Busca Perfeitamente Alinhado e Estilizado -->
+      <div class="mt-5 max-w-lg mx-auto relative">
+        <input type="text" id="catalogSearchInput" placeholder="Pesquisar louvor..." class="w-full bg-[#03141b]/70 hover:bg-[#03141b]/90 focus:bg-[#020a0e]/95 border border-teal-800/40 hover:border-teal-500/40 focus:border-[#5eead4] rounded-full pl-11 pr-12 py-3 text-sm text-[#ccfbf1] placeholder-teal-300/40 font-serif-classic focus:outline-none focus:ring-2 focus:ring-teal-400/20 shadow-2xl backdrop-blur-md transition-colors duration-200" autocomplete="off">
+        <i class="fa-solid fa-magnifying-glass text-[#5eead4]/70 absolute left-4 top-3.5 text-sm"></i>
+        <div class="absolute right-3.5 top-2.5">
+          <kbd class="hidden sm:inline-block text-[10px] font-mono text-teal-300/70 bg-teal-950/80 border border-teal-700/40 px-2 py-0.5 rounded-full">ESC</kbd>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container dos Cards com Amplo Padding Superior (Sem Cortes de Hover) -->
+    <div class="relative z-10 flex-1 overflow-y-auto px-6 md:px-12 pt-3 pb-12 max-w-5xl w-full mx-auto">
+      <div id="catalogCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-4 py-1"></div>
+      <div id="catalogEmptyState" class="hidden text-center py-16 space-y-3">
+        <div class="h-12 w-12 rounded-2xl bg-teal-950/80 border border-teal-700/40 text-teal-400 mx-auto flex items-center justify-center text-xl">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <p class="text-sm text-teal-200/70 font-serif-classic font-medium">Nenhum louvor encontrado para essa busca.</p>
+        <button id="btnCatalogResetSearch" class="text-xs text-[#5eead4] hover:underline font-serif-classic font-semibold">Limpar busca</button>
+      </div>
+    </div>
+  </div>
+<!-- 1. MODO ESTÚDIO (OPERADOR) -->
+  <div id="studioLayout" class="flex-1 flex flex-col overflow-hidden h-full">
+    <header class="bg-slate-900 border-b border-slate-800 px-3 md:px-4 py-2 flex items-center justify-between shrink-0 z-20 shadow-md">
+      <div class="flex items-center space-x-3">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-md">
+          <i class="fa-solid fa-hands-praying text-white text-sm"></i>
+        </div>
+        <div>
+          <h1 class="font-outfit font-extrabold text-sm md:text-base tracking-wide flex items-center gap-2">
+            LyricSlide Studio
+            <span id="systemModeBadge" class="text-[10px] font-semibold uppercase bg-indigo-950/90 text-indigo-300 border border-indigo-700/50 px-2 py-0.5 rounded-full">
+              Janela Telão (1 ou 2 Telas)
+            </span>
+          </h1>
+          <div class="flex items-center gap-2 text-xs text-slate-400">
+            <span id="activeSongDisplayTitle" class="font-medium text-slate-200 truncate max-w-[200px] md:max-w-[280px]">Carregando...</span>
+            <span id="activeSongToneBadge" class="hidden text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-amber-300 font-mono"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+        <button id="modeBtnCatalog" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition text-slate-400 hover:text-white" title="Voltar para o catálogo de músicas">
+          <i class="fa-solid fa-list-ul text-xs text-indigo-400"></i>
+          <span class="hidden sm:inline">Músicas</span>
+        </button>
+        <button id="modeBtnWindow" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition bg-indigo-600 text-white shadow-sm">
+          <i class="fa-solid fa-sliders text-xs"></i>
+          <span class="hidden sm:inline">Estúdio</span>
+        </button>
+
+        <button id="modeBtnPresentation" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition text-emerald-400 hover:text-emerald-300 hover:bg-slate-900" title="Projeção limpa de alta performance para 1 monitor">
+          <i class="fa-solid fa-play text-xs"></i>
+          <span class="font-semibold">Modo 1 Tela (Palco)</span>
+        </button>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <button id="btnLinkFile" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition">
+          <i class="fa-solid fa-folder-open text-indigo-400 text-xs"></i>
+          <span class="hidden md:inline">Vincular</span>
+        </button>
+
+        <button id="btnSaveDirectFile" class="flex items-center space-x-1.5 bg-indigo-600 hover:bg-indigo-500 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold transition shadow-sm">
+          <i class="fa-solid fa-floppy-disk text-xs"></i>
+          <span class="hidden md:inline">Gravar</span>
+        </button>
+
+        <div class="h-4 w-[1px] bg-slate-800 hidden sm:block"></div>
+
+        <button id="btnOpenProjectorWindow" class="flex items-center space-x-1.5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-md active:scale-95 transition">
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          <span>Abrir Janela Telão</span>
+        </button>
+
+        <button id="btnBlackout" title="Atalho: B" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium transition">
+          <span class="w-2 h-2 rounded-full bg-rose-500" id="blackoutDot"></span>
+          <span id="blackoutLabel">Blackout [B]</span>
+        </button>
+
+        <button id="btnClearText" title="Atalho: C" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium transition">
+          <i class="fa-regular fa-eye-slash text-amber-400 text-xs"></i>
+          <span id="clearTextLabel">Limpar [C]</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-1 flex overflow-hidden relative">
+      <!-- PAINEL ESQUERDO: Coletânea -->
+      <aside class="w-64 lg:w-72 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+        <div class="p-3 border-b border-slate-800 bg-slate-900/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <i class="fa-solid fa-book-bible text-indigo-400 text-xs"></i>
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Repertório</span>
+              <span id="repertoireCountBadge" class="text-[10px] font-bold bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded-full">0</span>
+            </div>
+
+            <button id="btnNewSong" class="flex items-center space-x-1 text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-2 py-1 rounded-md transition shadow">
+              <i class="fa-solid fa-plus text-[10px]"></i>
+              <span>Novo</span>
+            </button>
+          </div>
+
+          <div class="relative">
+            <input type="text" id="searchSongInput" placeholder="Buscar título ou letra..." class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-3 py-1 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+            <i class="fa-solid fa-magnifying-glass text-slate-500 absolute left-2.5 top-2 text-[10px]"></i>
+          </div>
+        </div>
+
+        <div id="repertoireList" class="flex-1 overflow-y-auto p-2 space-y-1"></div>
+
+        <div class="p-2.5 border-t border-slate-800 bg-slate-950/60 flex items-center justify-between text-[11px]">
+          <button id="btnExportAll" class="text-slate-400 hover:text-white flex items-center gap-1" title="Exportar repertório atual em JSON">
+            <i class="fa-solid fa-download text-indigo-400"></i> Exportar
+          </button>
+          <button id="btnResetDefault" class="text-slate-400 hover:text-amber-300 flex items-center gap-1 transition" title="Restaurar a coletânea padrão original (11 canções)">
+            <i class="fa-solid fa-rotate-left text-amber-400"></i> Padrão
+          </button>
+          <label class="text-slate-400 hover:text-white flex items-center gap-1 cursor-pointer" title="Importar arquivo JSON de músicas">
+            <i class="fa-solid fa-upload text-emerald-400"></i> Importar
+            <input type="file" id="fileImportInput" accept=".json,.txt" class="hidden">
+          </label>
+        </div>
+      </aside>
+
+      <!-- PAINEL CENTRAL: Editor -->
+      <div id="editorDrawer" class="w-72 lg:w-80 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+        <div class="p-3 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Configuração da Canção</span>
+          <button id="btnSaveSong" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded-md transition shadow flex items-center space-x-1">
+            <i class="fa-solid fa-check text-[10px]"></i>
+            <span>Salvar</span>
+          </button>
+        </div>
+
+        <div class="flex-1 p-3 space-y-3 overflow-y-auto">
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-2">
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Título</label>
+              <input type="text" id="editTitle" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Tom</label>
+              <input type="text" id="editTone" placeholder="ex: D" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <div class="flex flex-col h-40">
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-[11px] font-medium text-slate-400">Letra</label>
+              <span class="text-[10px] text-indigo-400 font-mono">2x Enter = Novo Slide</span>
+            </div>
+            <textarea id="editLyrics" class="flex-1 w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none leading-relaxed"></textarea>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800 space-y-2.5">
+            <span class="text-[11px] font-bold text-indigo-400 uppercase tracking-wider block">Tema e Cenário Sagrado</span>
+
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Cenário SVG & Cores da Letra (de temas.js)</label>
+              <!-- Preenchido Dinamicamente via JavaScript -->
+              <select id="editTheme" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"></select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Fonte da Canção</label>
+              <select id="editFontFamily" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                <option value="font-outfit">Outfit (Moderna & Legível)</option>
+                <option value="font-cinzel">Cinzel (Solene / Sacra)</option>
+                <option value="font-serif-classic">Merriweather (Hinário Tradicional)</option>
+                <option value="font-serif-display">Playfair (Elegante & Expressiva)</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs text-slate-400 mb-1">
+                <span>Tamanho da Letra</span>
+                <span id="labelFontSize" class="font-mono text-indigo-400 text-xs">3.8rem</span>
+              </div>
+              <input type="range" id="editFontSize" min="2.2" max="5.6" step="0.1" value="3.8" class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Alinhamento</label>
+                <div class="flex bg-slate-950 p-1 rounded-lg border border-slate-700">
+                  <button type="button" data-align="text-center" class="btn-align-opt flex-1 py-1 rounded text-xs text-center transition bg-indigo-600 text-white font-medium">Centro</button>
+                  <button type="button" data-align="text-left" class="btn-align-opt flex-1 py-1 rounded text-xs text-center transition text-slate-400 hover:text-white">Esq</button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Caixa Alta</label>
+                <button type="button" id="btnToggleUppercase" class="w-full py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs font-semibold text-slate-300 transition">
+                  MAIÚSCULO
+                </button>
+              </div>
+            </div>
+
+            <div class="pt-2 flex justify-between items-center text-xs">
+              <button id="btnDuplicateSong" class="text-slate-400 hover:text-white underline">Duplicar</button>
+              <button id="btnDeleteSong" class="text-rose-400 hover:text-rose-300">Excluir Música</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL DIREITO: Monitores e Timeline -->
+      <section class="flex-1 flex flex-col bg-slate-950 overflow-hidden">
+        <div class="flex-1 p-3 md:p-4 grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 overflow-hidden">
+          
+          <!-- MONITOR 1: AO VIVO -->
+          <div class="flex flex-col rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden shadow-xl">
+            <div class="px-3 py-2 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+                <span class="text-xs font-bold uppercase tracking-wider text-rose-300">Ao Vivo no Telão</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+                <span id="previewSlideTypeTag" class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-950 border border-indigo-800 text-indigo-300 font-sans">Slide</span>
+                <span><span id="previewCurrentNum" class="text-white font-bold">1</span>/<span id="previewTotalNum" class="text-white">1</span></span>
+              </div>
+            </div>
+
+            <div id="liveViewportContainer" class="flex-1 bg-stage-surface flex items-center justify-center p-6 relative overflow-hidden">
+              <div id="studioBgLayer" class="absolute inset-0 pointer-events-none z-0 overflow-hidden"></div>
+              <div id="studioBlackoutOverlay" class="absolute inset-0 bg-black opacity-0 pointer-events-none transition-opacity duration-200 flex items-center justify-center z-20">
+                <span class="text-xs text-rose-400 font-mono uppercase tracking-widest bg-black/80 px-3 py-1.5 rounded-full border border-rose-900/50">
+                  [Blackout Ativo]
+                </span>
+              </div>
+              <div id="studioLiveFrame" class="w-full text-center transition-opacity duration-200 z-10">
+                <div id="studioSlideContent"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MONITOR 2: PRÓXIMO SLIDE -->
+          <div class="flex flex-col rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+            <div class="px-3 py-2 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-forward text-slate-400 text-xs"></i>
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">A Seguir (Preview)</span>
+              </div>
+              <span id="previewNextBadge" class="text-[11px] font-mono text-slate-400">Slide 2</span>
+            </div>
+
+            <div class="flex-1 bg-slate-950/60 flex items-center justify-center p-6 relative overflow-hidden">
+              <div id="studioNextContent" class="text-slate-400 text-center font-medium max-w-md italic">
+                (Aguardando...)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-32 bg-slate-900 border-t border-slate-800 p-2.5 flex flex-col justify-between shrink-0">
+          <div class="flex items-center justify-between mb-1.5 px-1">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sequência da Canção</span>
+            <div class="flex items-center space-x-2">
+              <button id="btnPrevSlide" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold border border-slate-700 transition">
+                <i class="fa-solid fa-chevron-left mr-1"></i> Anterior [←]
+              </button>
+              <button id="btnNextSlide" class="px-4 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md transition">
+                Avançar [Espaço / →] <i class="fa-solid fa-chevron-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="slideThumbnailsBar" class="flex-1 flex items-center space-x-2.5 overflow-x-auto pb-1"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 2. MODO 1 TELA (PROJEÇÃO LIMPA / APRESENTAÇÃO) -->
+  <div id="presentationLayout" class="hidden fixed inset-0 z-40 flex flex-col overflow-hidden select-none">
+    <header id="presHUD" class="hud-bar absolute top-3 inset-x-4 md:inset-x-8 z-50 flex items-center justify-between pointer-events-auto">
+      <div class="flex items-center space-x-2 bg-slate-950/80 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-full shadow-2xl">
+        <button id="btnOpenDrawerFromPres" class="flex items-center space-x-2 text-xs font-bold text-white hover:text-indigo-400 transition" title="Abrir Lista de Músicas [M]">
+          <span id="presSongIndexBadge" class="bg-indigo-600/80 text-white font-mono text-[10px] px-2 py-0.5 rounded-full">#01</span>
+          <span id="presSongTitle" class="truncate max-w-[150px] md:max-w-[280px]">Título</span>
+          <i class="fa-solid fa-bars-staggered text-xs text-slate-400"></i>
+        </button>
+        <span id="presSongToneBadge" class="hidden text-[10px] font-mono bg-white/10 px-1.5 py-0.5 rounded text-amber-300"></span>
+      </div>
+
+      <button id="btnOpenSpotlightSearch" class="hidden sm:flex items-center space-x-2.5 bg-slate-950/80 backdrop-blur-md border border-white/10 hover:border-indigo-500/50 px-4 py-1.5 rounded-full text-xs text-slate-300 shadow-2xl transition">
+        <i class="fa-solid fa-magnifying-glass text-indigo-400 text-xs"></i>
+        <span class="text-slate-400">Busca rápida / Saltar número...</span>
+        <kbd class="bg-white/10 text-[10px] font-mono px-1.5 py-0.5 rounded text-slate-400">Ctrl+K ou /</kbd>
+      </button>
+
+      <div class="flex items-center space-x-2 bg-slate-950/80 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full shadow-2xl text-xs">
+        <span class="text-[11px] font-mono text-slate-300 mr-1">
+          <span id="presSlideCur" class="text-white font-bold">1</span>/<span id="presSlideTot" class="text-slate-400">1</span>
+        </span>
+
+        <button id="presBtnBlackout" title="Blackout [B]" class="p-1.5 hover:bg-white/10 text-rose-400 rounded-lg transition">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <button id="presBtnClear" title="Limpar Texto [C]" class="p-1.5 hover:bg-white/10 text-amber-400 rounded-lg transition">
+          <i class="fa-regular fa-eye-slash"></i>
+        </button>
+
+        <button id="presBtnFullscreen" title="Tela Cheia [F]" class="p-1.5 hover:bg-white/10 text-white rounded-lg transition">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+
+        <div class="h-3 w-[1px] bg-white/20 mx-1"></div>
+
+        <button id="btnReturnToCatalogFromPres" class="flex items-center space-x-1 text-slate-300 hover:text-white font-semibold text-[11px] px-2 py-0.5 rounded-md hover:bg-white/10 transition" title="Voltar ao Catálogo de Músicas [ESC]">
+          <i class="fa-solid fa-list-ul text-xs text-indigo-400"></i>
+          <span>Músicas</span>
+        </button>
+
+        <button id="btnReturnToStudio" class="flex items-center space-x-1 text-slate-300 hover:text-white font-semibold text-[11px] px-2 py-0.5 rounded-md hover:bg-white/10 transition">
+          <i class="fa-solid fa-sliders text-xs text-indigo-400"></i>
+          <span>Estúdio</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="presentationViewport" class="flex-1 w-full h-full flex items-center justify-center p-8 md:p-20 relative bg-stage-surface overflow-hidden">
+      <!-- Camada SVG Fixa Contínua (Não reseta na troca de estrofe) -->
+      <div id="presBgLayer" class="absolute inset-0 pointer-events-none z-0 overflow-hidden"></div>
+      <div id="presBlackoutOverlay" class="absolute inset-0 bg-black opacity-0 pointer-events-none transition-opacity duration-200 z-30"></div>
+      <!-- Contêiner de Texto Desacoplado -->
+      <div id="presTextHolder" class="w-full max-w-6xl mx-auto flex items-center justify-center transition-opacity duration-200 z-10">
+        <div id="presSlideContent" class="w-full text-center"></div>
+      </div>
+
+      <div id="presNextHintPill" class="absolute bottom-4 right-6 bg-slate-950/60 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-full text-xs text-slate-400 font-medium max-w-xs truncate shadow-lg opacity-40 hover:opacity-100 transition-opacity">
+        <span class="text-indigo-400 font-bold mr-1">Próx:</span>
+        <span id="presNextHintText">...</span>
+      </div>
+
+      <div id="presLeftHotspot" class="absolute left-0 top-0 bottom-0 w-24 flex items-center justify-start pl-4 opacity-0 hover:opacity-100 transition-opacity cursor-pointer z-20">
+        <div class="h-12 w-12 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center border border-white/10 shadow-lg">
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+      </div>
+      <div id="presRightHotspot" class="absolute right-0 top-0 bottom-0 w-24 flex items-center justify-end pr-4 opacity-0 hover:opacity-100 transition-opacity cursor-pointer z-20">
+        <div class="h-12 w-12 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center border border-white/10 shadow-lg">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. GAVETA LATERAL [M] -->
+  <div id="drawerNumberedSongs" class="fixed inset-y-0 left-0 w-80 md:w-96 bg-slate-950/95 backdrop-blur-xl border-r border-slate-800 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+    <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs font-bold">
+          <i class="fa-solid fa-list-ol"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-white">Repertório do Culto</h3>
+          <p class="text-[10px] text-slate-400">Pressione 'M' para abrir ou fechar</p>
+        </div>
+      </div>
+      <button id="btnCloseNumberedDrawer" class="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="p-3 border-b border-slate-800/60">
+      <div class="relative">
+        <input type="text" id="drawerSearchInput" placeholder="Filtrar número ou título..." class="w-full bg-slate-900 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+        <i class="fa-solid fa-magnifying-glass text-slate-500 absolute left-2.5 top-2.5 text-xs"></i>
+      </div>
+    </div>
+
+    <div id="drawerListContainer" class="flex-1 overflow-y-auto p-2 space-y-1"></div>
+  </div>
+  <div id="drawerBackdrop" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-45 transition-opacity"></div>
+
+  <!-- 4. SPOTLIGHT [Ctrl+K ou '/'] -->
+  <div id="modalSpotlightSearch" class="hidden fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-slate-950/80 backdrop-blur-md">
+    <div class="bg-slate-900 border border-slate-700 max-w-xl w-full rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+      <div class="p-3.5 border-b border-slate-800 flex items-center space-x-3 bg-slate-950/60">
+        <i class="fa-solid fa-magnifying-glass text-indigo-400 text-sm"></i>
+        <input type="text" id="spotlightInput" placeholder="Digite o número (ex: 2) ou trecho da música..." class="flex-1 bg-transparent text-white text-sm focus:outline-none placeholder-slate-500" autocomplete="off">
+        <kbd class="text-[10px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">ESC</kbd>
+      </div>
+      <div id="spotlightResultsList" class="max-h-80 overflow-y-auto p-2 space-y-1"></div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       TEMAS EMBUTIDOS (INLINE)
+       ========================================================================= */
+    /**
+ * LyricSlide Worship Themes Configuration
+ * Cada tema define estilo iconográfico arredondado de baixo contraste,
+ * cores de texto correspondentes e gradiente de fundo animado.
+ */
+window.WORSHIP_THEMES = {
+  "theme-cross-grace": {
+    id: "theme-cross-grace",
+    name: "✝️ Cruz da Graça & Auroras Suaves",
+    textColor: "#f1f5f9",
+    titleAccent: "#93c5fd",
+    cssVariables: {
+      "--bg-gradient": "linear-gradient(135deg, #090b14 0%, #151828 50%, #0d0f1a 100%)",
+      "--text-color": "#f1f5f9",
+      "--title-accent": "#93c5fd"
+    },
+    svgMarkup: `
+      <svg class="w-full h-full absolute inset-0" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="crossGlow" cx="50%" cy="45%" r="42%">
+            <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.18" />
+            <stop offset="65%" stop-color="#3b82f6" stop-opacity="0.04" />
+            <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="500" cy="450" r="340" fill="url(#crossGlow)" class="anim-pulse-gentle" />
+        <g class="anim-float" transform-origin="500 450">
+          <rect x="484" y="270" width="32" height="360" rx="16" fill="rgba(191,219,254,0.18)" stroke="rgba(219,234,254,0.3)" stroke-width="2" />
+          <rect x="380" y="360" width="240" height="32" rx="16" fill="rgba(191,219,254,0.18)" stroke="rgba(219,234,254,0.3)" stroke-width="2" />
+          <circle cx="500" cy="376" r="90" fill="none" stroke="rgba(191,219,254,0.16)" stroke-width="2" stroke-dasharray="8 8" />
+        </g>
+      </svg>
+    `
+  },
+
+  "theme-heavenly-glory": {
+    id: "theme-heavenly-glory",
+    name: "☀ Glória Celestial & Raios Dourados",
+    textColor: "#fef3c7",
+    titleAccent: "#fde68a",
+    cssVariables: {
+      "--bg-gradient": "radial-gradient(circle at 50% 40%, #281a0b 0%, #160e05 60%, #090602 100%)",
+      "--text-color": "#fef3c7",
+      "--title-accent": "#fde68a"
+    },
+    svgMarkup: `
+      <svg class="w-full h-full absolute inset-0" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.22" />
+            <stop offset="65%" stop-color="#d97706" stop-opacity="0.06" />
+            <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="1000" height="1000" fill="url(#sunGlow)" />
+        <g class="anim-rotate-slow" opacity="0.45">
+          <line x1="500" y1="120" x2="500" y2="280" stroke="rgba(253,230,138,0.3)" stroke-width="4" stroke-linecap="round" />
+          <line x1="500" y1="720" x2="500" y2="880" stroke="rgba(253,230,138,0.3)" stroke-width="4" stroke-linecap="round" />
+          <line x1="120" y1="500" x2="280" y2="500" stroke="rgba(253,230,138,0.3)" stroke-width="4" stroke-linecap="round" />
+          <line x1="720" y1="500" x2="880" y2="500" stroke="rgba(253,230,138,0.3)" stroke-width="4" stroke-linecap="round" />
+          <line x1="230" y1="230" x2="340" y2="340" stroke="rgba(253,230,138,0.25)" stroke-width="3" stroke-linecap="round" />
+          <line x1="660" y1="660" x2="770" y2="770" stroke="rgba(253,230,138,0.25)" stroke-width="3" stroke-linecap="round" />
+          <line x1="770" y1="230" x2="660" y2="340" stroke="rgba(253,230,138,0.25)" stroke-width="3" stroke-linecap="round" />
+          <line x1="340" y1="660" x2="230" y2="770" stroke="rgba(253,230,138,0.25)" stroke-width="3" stroke-linecap="round" />
+        </g>
+        <circle cx="500" cy="500" r="140" fill="none" stroke="rgba(252,211,77,0.22)" stroke-width="2" class="anim-pulse-gentle" />
+        <circle cx="500" cy="500" r="80" fill="rgba(251,191,36,0.12)" />
+      </svg>
+    `
+  },
+
+  "theme-holy-spirit": {
+    id: "theme-holy-spirit",
+    name: "🕊️ Espírito Santo & Brisa Celeste",
+    textColor: "#e0f2fe",
+    titleAccent: "#7dd3fc",
+    cssVariables: {
+      "--bg-gradient": "linear-gradient(145deg, #0f172a 0%, #142838 50%, #09131c 100%)",
+      "--text-color": "#e0f2fe",
+      "--title-accent": "#7dd3fc"
+    },
+    svgMarkup: `
+      <svg class="w-full h-full absolute inset-0" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="doveGlow" cx="50%" cy="46%" r="45%">
+            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.18" />
+            <stop offset="70%" stop-color="#0284c7" stop-opacity="0.04" />
+            <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="1000" height="1000" fill="url(#doveGlow)" />
+        <g class="anim-float" transform-origin="500 460">
+          <path d="M500,380 C440,320 360,340 330,400 C300,460 360,500 450,470 C420,530 450,570 500,580 C550,570 580,530 550,470 C640,500 700,460 670,400 C640,340 560,320 500,380 Z" 
+                fill="rgba(186,230,253,0.14)" 
+                stroke="rgba(224,242,254,0.3)" 
+                stroke-width="2.5" 
+                stroke-linejoin="round" />
+          <circle cx="500" cy="620" r="5" fill="rgba(186,230,253,0.3)" />
+          <circle cx="500" cy="650" r="3.5" fill="rgba(186,230,253,0.2)" />
+        </g>
+      </svg>
+    `
+  },
+
+  "theme-royal-worship": {
+    id: "theme-royal-worship",
+    name: "👑 Adoração Real & Púrpura Imperial",
+    textColor: "#fce7f3",
+    titleAccent: "#f472b6",
+    cssVariables: {
+      "--bg-gradient": "linear-gradient(135deg, #180928 0%, #27103e 50%, #0e0417 100%)",
+      "--text-color": "#fce7f3",
+      "--title-accent": "#f472b6"
+    },
+    svgMarkup: `
+      <svg class="w-full h-full absolute inset-0" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="crownGlow" cx="50%" cy="45%" r="40%">
+            <stop offset="0%" stop-color="#f472b6" stop-opacity="0.16" />
+            <stop offset="60%" stop-color="#9d174d" stop-opacity="0.05" />
+            <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="1000" height="1000" fill="url(#crownGlow)" />
+        <g class="anim-float" transform-origin="500 450">
+          <path d="M380,480 L410,380 L470,440 L500,350 L530,440 L590,380 L620,480 C600,510 400,510 380,480 Z" 
+                fill="rgba(244,114,182,0.12)" 
+                stroke="rgba(251,207,232,0.28)" 
+                stroke-width="2" 
+                stroke-linejoin="round" 
+                stroke-linecap="round" />
+          <circle cx="410" cy="370" r="5" fill="rgba(251,207,232,0.3)" />
+          <circle cx="500" cy="340" r="6" fill="rgba(251,207,232,0.35)" />
+          <circle cx="590" cy="370" r="5" fill="rgba(251,207,232,0.3)" />
+        </g>
+      </svg>
+    `
+  },
+
+  "theme-living-water": {
+    id: "theme-living-water",
+    name: "🌊 Águas Vivas & Fluidez Calmante",
+    textColor: "#ccfbf1",
+    titleAccent: "#5eead4",
+    cssVariables: {
+      "--bg-gradient": "radial-gradient(circle at center, #06232d 0%, #03141b 60%, #020a0e 100%)",
+      "--text-color": "#ccfbf1",
+      "--title-accent": "#5eead4"
+    },
+    svgMarkup: `
+      <svg class="w-full h-full absolute inset-0" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="waterGlow" cx="50%" cy="60%" r="50%">
+            <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.16" />
+            <stop offset="70%" stop-color="#0f766e" stop-opacity="0.05" />
+            <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="1000" height="1000" fill="url(#waterGlow)" />
+        <g class="anim-wave-slow" opacity="0.6">
+          <path d="M-100,580 C150,530 350,630 600,580 C850,530 1050,630 1300,580" fill="none" stroke="rgba(94,234,212,0.22)" stroke-width="3" stroke-linecap="round" />
+          <path d="M-100,640 C150,600 380,690 620,640 C860,590 1080,680 1300,640" fill="none" stroke="rgba(94,234,212,0.18)" stroke-width="2.5" stroke-linecap="round" />
+          <path d="M-100,700 C180,670 410,740 650,700 C890,660 1100,730 1300,700" fill="none" stroke="rgba(94,234,212,0.14)" stroke-width="2" stroke-linecap="round" />
+        </g>
+      </svg>
+    `
+  },
+
+  "theme-night-minimal": {
+    id: "theme-night-minimal",
+    name: "✨ Vigília Noturna & Estrelas Minimalistas",
+    textColor: "#f8fafc",
+    titleAccent: "#cbd5e1",
+    cssVariables: {
+      "--bg-gradient": "linear-gradient(180deg, #0b0f17 0%, #030712 100%)",
+      "--text-color": "#f8fafc",
+      "--title-accent": "#cbd5e1"
+    },
+    svgMarkup: `
+      <svg class="w-full h-full absolute inset-0" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <g class="anim-pulse-gentle">
+          <circle cx="200" cy="180" r="2.5" fill="rgba(248,250,252,0.25)" />
+          <circle cx="780" cy="220" r="2" fill="rgba(248,250,252,0.2)" />
+          <circle cx="480" cy="140" r="1.5" fill="rgba(248,250,252,0.25)" />
+          <circle cx="850" cy="420" r="2" fill="rgba(248,250,252,0.18)" />
+          <circle cx="150" cy="480" r="2" fill="rgba(248,250,252,0.22)" />
+        </g>
+      </svg>
+    `
+  }
+};
+
+
+    const STORAGE_KEY = "lyricslide_worship_v10";
+    const CHANNEL_NAME = "lyricslide_worship_channel_v5";
+
+    let currentAppMode = "presentation";
+    let projectorWindowRef = null;
+    let broadcastChannel = null;
+    let currentFileHandle = null;
+
+    try {
+      broadcastChannel = new BroadcastChannel(CHANNEL_NAME);
+    } catch (e) {
+      console.warn("BroadcastChannel fallback ativo", e);
+    }
+
+    const DEFAULT_REPERTOIRE = [
+  {
+    "id": "song_1790999614608",
+    "title": "Porque Ele Vive",
+    "artist": "Ministério de Louvor",
+    "tone": "",
+    "lyrics": "Porque Ele vive, posso crer no amanhã\nPorque Ele vive, temor não há\n\nMas eu bem sei, eu sei, que a minha vida, \n\n(2x)\nEstá nas mãos do meu Jesus, que vivo está\n\n(4x)\nEstá nas mãos do meu Jesus, que vivo está\n\nE quando, enfim, chegar a hora\nEm que a morte enfrentarei\n\nSem medo, então, terei vitória\nVerei à glória, ao meu Jesus que vivo está\n\nPorque Ele vive, posso crer no amanhã\nPorque Ele vive, temor não há\n\nMas eu bem sei, eu sei, que a minha vida\nEstá nas mãos do meu Jesus, que vivo está\n\n(2x)\nEstá nas mãos do meu Jesus, que vivo está\n\nVivo está\nVivo está",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade"
+  },
+  {
+    "id": "musica-1",
+    "title": "Me Cura",
+    "artist": "Ministério de Louvor",
+    "key": "C",
+    "tone": "",
+    "tempo": "68 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-outfit",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade",
+    "lyrics": "Não preciso que Tu venhas a minha casa\nSó preciso que Tu digas uma palavra\n\nNão sou digno, não sou digno, mas entre a multidão eu grito\n\nJesus, filho de Davi, tenha compaixão de mim\n\n(2x)\nEu sei que Tu podes, Senhor se quiseres, podes me purificar\n\n[Refrão]\nMe cura, Senhor! Me cura, Senhor\nManifesta em mim as Tuas obras\nVem, Jesus, te peço agora\n\nMe cura, Senhor! Me cura, Senhor!\nEu creio, eu creio. Me cura, Senhor!\n\nEm Teu manto me agarro e recebo poder\nPor Tua ordem me liberto, correntes não vão me prender\n\nToca agora os meus olhos, põe Teu barro curador\nChama agora o meu nome, me levanta, Senhor\n\n(2x)\nEu sei que Tu podes, Senhor se quiseres, podes me purificar\n\n[Refrão]\nMe cura, Senhor! Me cura, Senhor\nManifesta em mim as Tuas obras\nVem, Jesus, te peço agora\n\nMe cura, Senhor! Me cura, Senhor!\nEu creio, eu creio\nMe cura, Senhor!\n\n[Refrão]\nMe cura, Senhor! Me cura, Senhor\nManifesta em mim as Tuas obras\nVem, Jesus, te peço agora\n\nMe cura, Senhor! Me cura, Senhor!\nEu creio, eu creio\nMe cura, Senhor!"
+  },
+  {
+    "id": "musica-2",
+    "title": "O Verbo",
+    "artist": "Comunidade Cristã",
+    "key": "G",
+    "tone": "",
+    "tempo": "72 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.6",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-slide-up",
+    "lyrics": "No princípio era o Verbo\nE o Verbo estava com Deus\n\nE o Verbo era Deus\nEle estava no princípio com Deus\n\nTodas as coisas foram feitas por meio Dele\n\nSem Ele nada do que foi\nFeito se fez\n\n[Refrão]\nE o Verbo Se fez carne\nE habitou entre nós\n\nCheio de graça e de verdade\nVimos Sua glória\n\nE o Verbo Se fez carne\nE habitou entre nós\nCristo, a Palavra, o Verbo!\n\nNo princípio era o Verbo\nE o Verbo estava com Deus\n\nE o Verbo era Deus\nEle estava no princípio com Deus\n\nTodas as coisas foram feitas por meio Dele\n\nSem Ele nada do que foi\nFeito se fez\n\n[Refrão]\nE o Verbo Se fez carne\nE habitou entre nós\n\nCheio de graça e de verdade\nVimos Sua glória\n\nE o Verbo Se fez carne\nE habitou entre nós\nCristo, a Palavra, o Verbo!"
+  },
+  {
+    "id": "musica-3",
+    "title": "Era a Mão de Deus",
+    "artist": "Adoração & Vida",
+    "key": "F",
+    "tone": "",
+    "tempo": "66 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade",
+    "lyrics": "Deus te livrou de um acidente que você nem viu\nEra a mão de Deus ali\n\nAquele dia que você chorou mas insistiu\nEra a mão de Deus ali\n\nQuando a prova foi difícil mas você sorriu\nEra a mão de Deus ali\n\nMesmo quando em meio à dor você não desistiu\nEra a mão de Deus ali\n\n[Refrão]\nEra a mão de Deus, era a mão de Deus\nTe guardando e cuidando de ti\n\nEra a mão de Deus, era a mão de Deus\nEra a mão de Deus ali\n\nAquela porta intransponível que enfim se abriu\nEra a mão de Deus ali\n\nAquilo que era impossível mas que se cumpriu\nEra a mão de Deus ali\n\nAquele sonho que se transformou em frustração\nEra a mão de Deus ali\n\nAquele sim tão esperado que virou um não\nEra a mão de Deus ali\n\n[Refrão]\nEra a mão de Deus, era a mão de Deus\nTe guardando e cuidando de ti\n\nEra a mão de Deus, era a mão de Deus\nEra a mão de Deus ali\n\n[Refrão]\nEra a mão de Deus, era a mão de Deus\nTe guardando e cuidando de ti\n\nEra a mão de Deus, era a mão de Deus\nEra a mão de Deus ali\n\n[Refrão]\nEra a mão de Deus, era a mão de Deus\nTe guardando e cuidando de ti\n\nEra a mão de Deus, era a mão de Deus\nEra a mão de Deus ali"
+  },
+  {
+    "id": "musica-4",
+    "title": "Teu Abraço",
+    "artist": "Ministério Íntimo",
+    "key": "A",
+    "tone": "",
+    "tempo": "70 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade",
+    "lyrics": "Parece que meus pés estão subindo\nO chão ao longe logo vai sumindo\n\nOlho para cima e entendo\nOs Teus braços estão me envolvendo\n\nParece que meus pés estão subindo\nO chão ao longe logo vai sumindo\n\nOlho para cima e entendo\nOs Teus braços estão me envolvendo\n\n[Refrão]\nEu sinto agora\nTeu abraço me levando para fora\n\nMe tirando desse mundo sem demora\nMe erguendo para onde Tua graça mora\n\n[Refrão]\nEu sinto agora\nTeu abraço me levando para fora\n\nMe tirando desse mundo sem demora\nMe erguendo para onde Tua graça mora\n\nParece que meus pés estão subindo\nO chão ao longe logo vai sumindo\n\nOlho para cima e entendo\nOs Teus braços estão me envolvendo\n\nParece que meus pés estão subindo\nO chão ao longe logo vai sumindo\n\nOlho para cima e entendo\nOs Teus braços estão me envolvendo\n\n[Refrão]\nEu sinto agora\nTeu abraço me levando para fora\n\nMe tirando desse mundo sem demora\nMe erguendo para onde Tua graça mora\n\n[Refrão]\nEu sinto agora\nTeu abraço me levando para fora\n\nMe tirando desse mundo sem demora\nMe erguendo para onde Tua graça mora\n\n[Refrão]\nEu sinto agora\nTeu abraço me levando para fora\n\nMe tirando desse mundo sem demora\nMe erguendo para onde Tua graça mora\n\n[Refrão]\nEu sinto agora\nTeu abraço me levando para fora\n\nMe tirando desse mundo sem demora\nMe erguendo para onde Tua graça mora"
+  },
+  {
+    "id": "musica-5",
+    "title": "Eu Te Louvarei",
+    "artist": "Adoração Comunitária",
+    "key": "D",
+    "tone": "",
+    "tempo": "74 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-slide-up",
+    "lyrics": "És Tu única razão, da minha adoração ó Jesus\nÉs Tu única esperança que anelo ter ó Jesus\n\nConfiei em Ti, fui ajudado, Tua salvação tem me alegrado\nHoje há gozo em meu coração, com meu canto te louvarei!\n\n[Refrão]\n(2x)\nEu te louvarei, te glorificarei\nEu te louvarei meu bom Jesus\n\nÉs Tu única razão, da minha adoração ó Jesus\nÉs Tu única esperança que anelo ter ó Jesus\n\nConfiei em Ti, fui ajudado, Tua salvação tem me alegrado\nHoje há gozo em meu coração, com meu canto te louvarei!\n\n[Refrão]\n(3x)\nEu te louvarei, te glorificarei\nEu te louvarei meu bom Jesus"
+  },
+  {
+    "id": "musica-6",
+    "title": "Reina Em Mim / Ele É Exaltado / O Senhor É o Meu Abrigo",
+    "artist": "Medley de Louvor",
+    "key": "G",
+    "tone": "",
+    "tempo": "76 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.6",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade",
+    "lyrics": "Sobre toda a Terra Tu és o Rei\nSobre as montanhas e o pôr-do-sol\n\nUma coisa só meu desejo é\nVem reinar em mim Senhor\n\nSobre toda a Terra Tu és o Rei\nSobre as montanhas e o pôr-do-sol\n\nUma coisa só meu desejo é\nVem reinar em mim Senhor\n\n[Refrão]\nReina em mim com o Teu poder\nSobre a escuridão, Sobre os sonhos meus\n\nTu és o Senhor de tudo que sou\nVem reinar em mim Senhor\n\nSobre o meu pensar, tudo o que eu falar\nFaz-me refletir a beleza que há em Ti\n\nPois Tu és pra mim mais que tudo aqui\nVem reinar de novo em mim\n\n[Refrão]\nReina em mim com o Teu poder\nSobre a escuridão, Sobre os sonhos meus\n\nTu és o Senhor de tudo que sou\nVem reinar em mim Senhor\n\n[Refrão]\nReina em mim com o Teu poder\nSobre a escuridão, Sobre os sonhos meus\n\nTu és o Senhor de tudo que sou\n\n(3x) \nVem reinar em mim Senhor\n\n[Ele É Exaltado]\nEle é exaltado, o Rei exaltado no céu, eu o louvarei\nEle é exaltado, pra sempre exaltado Seu nome louvarei\n\nEle é o Senhor, pra sempre irá reinar\nTerra e Céu, proclamam Seu santo nome\n\n(2x)\nEle é exaltado, o Rei exaltado nos céus, Aleluia\n\nEle é exaltado, o Rei exaltado nos céus\n\n[O Senhor É o Meu Abrigo]\nO Senhor é o meu abrigo, Seguro Rocha eterna\nÉ só nEle que eu confio, só Ele vence a guerra\n\nContra os meus inimigos, não preciso temer\nO Senhor é comigo, me dá poder\n\nEle dá o poder, \nEle dá o poder\n\nO Senhor, me dá poder!\nO Senhor é o meu abrigo\n"
+  },
+  {
+    "id": "musica-7",
+    "title": "Esconderijo",
+    "artist": "Comunhão & Adoração",
+    "key": "Em",
+    "tone": "",
+    "tempo": "68 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade",
+    "lyrics": "Aquele que habita no esconderijo do Altíssimo\nE descansa à sombra do Onipotente\n\nAquele que habita no esconderijo do Altíssimo\nE descansa à sombra do Onipotente\nDiz ao Senhor:\n\n[Refrão]\nMeu refúgio, fortaleza\nO Deus em quem eu sempre confio\n\nNenhum laço, nem veneno, ou flecha, vão me atingir\nPois eu me escondo em Ti\n\n(2x)\nE Tu me cobrirás com Tuas penas\nSob Tuas asas estarei seguro\nA Tua fidelidade é meu escudo\n\n[Refrão]\nMeu refúgio, fortaleza\nO Deus em quem eu sempre confio\n\nNenhum laço, nem veneno, ou flecha, vão me atingir\nPois eu me escondo\n\nMil podem cair ao meu lado\nE dez mil à minha direita\nPelo Senhor ficarei em pé\n\nE praga nenhuma nem mal\nChegarão à minha tenda\nO meu Senhor é minha salvação\n\n[Refrão]\nMeu refúgio, fortaleza\nO Deus em quem eu sempre confio\n\nNenhum laço, nem veneno, ou flecha, vão me atingir\nPois eu me escondo\n\n[Refrão]\nMeu refúgio, fortaleza\nO Deus em quem eu sempre confio\n\nNenhum laço, nem veneno, ou flecha, vão me atingir\nPois eu me escondo em Ti"
+  },
+  {
+    "id": "musica-8",
+    "title": "Te Agradeço",
+    "artist": "Diante do Trono",
+    "key": "G",
+    "tone": "",
+    "tempo": "68 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade",
+    "lyrics": "Por tudo o que Tens feito\nPor tudo o que Vais fazer\n\nPor Tuas promessas e tudo o que És\nEu quero Te agradecer\nCom todo o meu ser\n\n[Homens]\nTe agradeço, meu Senhor\n\n[Mulheres]\nTe agradeço, meu Senhor\n\n[Todos]\nTe agradeço por me libertar e salvar\nPor ter morrido em meu lugar\n\nTe agradeço\nJesus, te agradeço\nEu te agradeço\nTe agradeço\n\nPor tudo o que Tens feito\nPor tudo o que Vais fazer\n\nPor Tuas promessas e tudo o que És\nEu quero Te agradecer\nCom todo o meu ser\n\n[Homens]\nTe agradeço, meu Senhor\n\n[Mulheres]\nTe agradeço, meu Senhor\n\n[Todos]\nTe agradeço por me libertar e salvar\nPor ter morrido em meu lugar\n\nTe agradeço\nJesus, te agradeço\nEu te agradeço\nTe agradeço"
+  },
+  {
+    "id": "musica-9",
+    "title": "A Tua Glória",
+    "artist": "Fernandinho",
+    "key": "G",
+    "tone": "",
+    "tempo": "70 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade",
+    "lyrics": "Eu vejo a glória do Senhor hoje aqui\nA Sua mão, o Seu poder sobre mim\n\nOs céus abertos, hoje eu vou contemplar\nO amor descer nesse lugar\n\nEu vejo a glória do Senhor hoje aqui\nA Sua mão, o Seu poder sobre mim\n\nOs céus abertos, hoje eu vou contemplar\nO amor descer nesse lugar\n\n[Refrão]\nEu quero ver agora, o Seu poder\nA Sua glória inundando o meu ser\n\nVou levantar as mãos e vou receber\nVou louvando o Teu nome\n\n[Refrão]\nEu quero ver agora, o Seu poder\nA Sua glória inundando o meu ser\n\nVou levantar as mãos e vou receber\nVou louvando o Teu nome\nPorque sinto o Senhor me tocar\n\nEu vejo a glória do Senhor hoje aqui\nA Sua mão, o Seu poder sobre mim\n\nOs céus abertos, hoje eu vou contemplar\nO amor descer nesse lugar\n\n[Refrão]\nEu quero ver agora, o Seu poder\nA Sua glória inundando o meu ser\n\nVou levantar as mãos e vou receber\nVou louvando o Seu nome\nPorque sinto o Senhor me tocar\n\n[Refrão]\nEu quero ver agora, o Seu poder\nA Sua glória inundando o meu ser\n\nVou levantar as mãos e vou receber\nVou louvando o Seu nome\nPorque sinto o Senhor me tocar\n\n[Refrão]\nEu quero ver agora, o Seu poder\nA Sua glória inundando o meu ser\n\nVou levantar as mãos e vou receber\nVou louvando o Teu nome\n\n[Refrão]\nEu quero ver agora, o Seu poder\nA Sua glória inundando o meu ser\n\nVou levantar as mãos e vou receber\nVou louvando o Teu nome\nPorque sinto o Senhor me tocar\n\nVou louvando o Teu nome\nPorque sinto o Senhor me tocar\n\nVou louvando o Teu nome\nPorque sinto o Senhor me tocar\n\nVou louvando o Teu nome"
+  },
+  {
+    "id": "musica-10",
+    "title": "Bondade de Deus",
+    "artist": "Isaías Saad",
+    "key": "G",
+    "tone": "",
+    "tempo": "68 bpm",
+    "theme": "theme-living-water",
+    "fontFamily": "font-serif-classic",
+    "fontSize": "3.8",
+    "align": "text-center",
+    "uppercase": false,
+    "transition": "trans-fade",
+    "lyrics": "Te amo, Deus\nTua graça nunca falha\n\nTodos os dias\nEu estou em Tuas mãos\n\nDesde quando me levanto\nAté eu me deitar\nEu cantarei da bondade de Deus\n\n[Refrão]\nÉs fiel em todo tempo\nEm todo tempo Tu és tão, tão bom\n\nCom todo fôlego que tenho\nEu cantarei da bondade de Deus\n\nTua doce voz\nQue me guia em meio ao fogo\n\nNa escuridão\nTua presença me conforta\n\nSei que és meu Pai\nQue amigo és\nEu vivo na bondade de Deus\n\n[Refrão]\nÉs fiel em todo tempo\nEm todo tempo Tu és tão, tão bom\n\nCom todo fôlego que tenho\nEu cantarei da bondade de Deus\n\n[Ponte]\nTua bondade me seguirá\nMe seguirá, Senhor\n\nTua bondade me seguirá\nMe seguirá, Senhor\n\nEu me rendo a Ti, Te dou o meu ser\nEntrego tudo a Ti\n\nTua bondade me seguirá\nMe seguirá, Senhor\n\n[Ponte]\nTua bondade me seguirá\nMe seguirá, Senhor\n\nTua bondade me seguirá\nMe seguirá, Senhor\n\nEu me rendo a Ti, Te dou o meu ser\nEntrego tudo a Ti\n\nTua bondade me seguirá\nMe seguirá, Senhor\n\n[Refrão]\nÉs fiel em todo tempo\nEm todo tempo Tu és tão, tão bom\n\nCom todo fôlego que tenho\nEu cantarei da bondade de Deus\n\n[Refrão]\nÉs fiel em todo tempo\nEm todo tempo Tu és tão, tão bom\n\nCom todo fôlego que tenho\nEu cantarei da bondade de Deus\n\n[Final]\nEu cantarei da bondade de Deus\nEu cantarei da bondade de Deus"
+  }
+];
+
+    let repertoire = [];
+    let activeSongId = null;
+    let structuredSlides = [];
+    let currentSlideIndex = 0;
+    let isBlackout = false;
+    let isTextCleared = false;
+    let spotlightSelectedIndex = 0;
+
+    // Elementos DOM
+    const catalogLayout = document.getElementById("catalogLayout");
+    const catalogCardsGrid = document.getElementById("catalogCardsGrid");
+    const catalogSearchInput = document.getElementById("catalogSearchInput");
+    const catalogCountBadge = document.getElementById("catalogCountBadge");
+    const catalogEmptyState = document.getElementById("catalogEmptyState");
+    const btnCatalogResetSearch = document.getElementById("btnCatalogResetSearch");
+    const btnCatalogOpenStudio = document.getElementById("btnCatalogOpenStudio");
+    const btnCatalogStartPres = document.getElementById("btnCatalogStartPres");
+    const modeBtnCatalog = document.getElementById("modeBtnCatalog");
+    const btnReturnToCatalogFromPres = document.getElementById("btnReturnToCatalogFromPres");
+    const btnResetDefault = document.getElementById("btnResetDefault");
+    const btnLinkFile = document.getElementById("btnLinkFile");
+    const btnSaveDirectFile = document.getElementById("btnSaveDirectFile");
+
+    const studioLayout = document.getElementById("studioLayout");
+    const presentationLayout = document.getElementById("presentationLayout");
+    const modeBtnWindow = document.getElementById("modeBtnWindow");
+    const modeBtnPresentation = document.getElementById("modeBtnPresentation");
+    const btnOpenProjectorWindow = document.getElementById("btnOpenProjectorWindow");
+
+    const activeSongDisplayTitle = document.getElementById("activeSongDisplayTitle");
+    const activeSongToneBadge = document.getElementById("activeSongToneBadge");
+    const repertoireList = document.getElementById("repertoireList");
+    const repertoireCountBadge = document.getElementById("repertoireCountBadge");
+    const searchSongInput = document.getElementById("searchSongInput");
+
+    const editTitle = document.getElementById("editTitle");
+    const editTone = document.getElementById("editTone");
+    const editLyrics = document.getElementById("editLyrics");
+    const editTheme = document.getElementById("editTheme");
+    const editFontFamily = document.getElementById("editFontFamily");
+    const editFontSize = document.getElementById("editFontSize");
+    const labelFontSize = document.getElementById("labelFontSize");
+    const btnToggleUppercase = document.getElementById("btnToggleUppercase");
+    const alignButtons = document.querySelectorAll(".btn-align-opt");
+    const btnSaveSong = document.getElementById("btnSaveSong");
+    const btnNewSong = document.getElementById("btnNewSong");
+    const btnDuplicateSong = document.getElementById("btnDuplicateSong");
+    const btnDeleteSong = document.getElementById("btnDeleteSong");
+
+    // Monitores do Estúdio
+    const liveViewportContainer = document.getElementById("liveViewportContainer");
+    const studioBgLayer = document.getElementById("studioBgLayer");
+    const studioSlideContent = document.getElementById("studioSlideContent");
+    const studioNextContent = document.getElementById("studioNextContent");
+    const previewCurrentNum = document.getElementById("previewCurrentNum");
+    const previewTotalNum = document.getElementById("previewTotalNum");
+    const previewNextBadge = document.getElementById("previewNextBadge");
+    const previewSlideTypeTag = document.getElementById("previewSlideTypeTag");
+    const studioBlackoutOverlay = document.getElementById("studioBlackoutOverlay");
+
+    // Controles
+    const slideThumbnailsBar = document.getElementById("slideThumbnailsBar");
+    const btnBlackout = document.getElementById("btnBlackout");
+    const blackoutDot = document.getElementById("blackoutDot");
+    const blackoutLabel = document.getElementById("blackoutLabel");
+    const btnClearText = document.getElementById("btnClearText");
+    const clearTextLabel = document.getElementById("clearTextLabel");
+    const btnPrevSlide = document.getElementById("btnPrevSlide");
+    const btnNextSlide = document.getElementById("btnNextSlide");
+
+    // Telão Apresentação (1 tela)
+    const presHUD = document.getElementById("presHUD");
+    const presSongIndexBadge = document.getElementById("presSongIndexBadge");
+    const presSongTitle = document.getElementById("presSongTitle");
+    const presSongToneBadge = document.getElementById("presSongToneBadge");
+    const presSlideCur = document.getElementById("presSlideCur");
+    const presSlideTot = document.getElementById("presSlideTot");
+    const presBtnBlackout = document.getElementById("presBtnBlackout");
+    const presBtnClear = document.getElementById("presBtnClear");
+    const presBtnFullscreen = document.getElementById("presBtnFullscreen");
+    const btnReturnToStudio = document.getElementById("btnReturnToStudio");
+    const presentationViewport = document.getElementById("presentationViewport");
+    const presBgLayer = document.getElementById("presBgLayer");
+    const presBlackoutOverlay = document.getElementById("presBlackoutOverlay");
+    const presTextHolder = document.getElementById("presTextHolder");
+    const presSlideContent = document.getElementById("presSlideContent");
+    const presNextHintText = document.getElementById("presNextHintText");
+    const presLeftHotspot = document.getElementById("presLeftHotspot");
+    const presRightHotspot = document.getElementById("presRightHotspot");
+
+    // Gaveta [M] & Spotlight [Ctrl+K]
+    const drawerNumberedSongs = document.getElementById("drawerNumberedSongs");
+    const drawerBackdrop = document.getElementById("drawerBackdrop");
+    const btnOpenDrawerFromPres = document.getElementById("btnOpenDrawerFromPres");
+    const btnCloseNumberedDrawer = document.getElementById("btnCloseNumberedDrawer");
+    const drawerSearchInput = document.getElementById("drawerSearchInput");
+    const drawerListContainer = document.getElementById("drawerListContainer");
+    const modalSpotlightSearch = document.getElementById("modalSpotlightSearch");
+    const spotlightInput = document.getElementById("spotlightInput");
+    const spotlightResultsList = document.getElementById("spotlightResultsList");
+    const btnOpenSpotlightSearch = document.getElementById("btnOpenSpotlightSearch");
+
+    // Exportação
+    const btnExportAll = document.getElementById("btnExportAll");
+    const fileImportInput = document.getElementById("fileImportInput");
+
+    /* =========================================================================
+       INICIALIZAÇÃO DO SELETOR DE TEMAS VIA temas.js
+       ========================================================================= */
+    function populateThemesSelect() {
+      editTheme.innerHTML = "";
+      const themes = window.WORSHIP_THEMES || {};
+      for (const [key, themeData] of Object.entries(themes)) {
+        const opt = document.createElement("option");
+        opt.value = key;
+        opt.textContent = themeData.name || key;
+        editTheme.appendChild(opt);
+      }
+    }
+
+    /* =========================================================================
+       ESTRUTURAÇÃO DOS SLIDES
+       ========================================================================= */
+    function buildSongSlideDeck(song) {
+      if (!song) return [];
+      const deck = [];
+
+      // Slide 0: Título do Louvor
+      deck.push({
+        type: 'title',
+        label: 'Capa / Título',
+        title: song.title || "Canção de Louvor",
+        artist: song.artist || "",
+        tone: song.tone || ""
+      });
+
+      // Slides 1..N: Estrofes da Letra
+      const rawText = (song.lyrics || "").trim();
+      if (rawText) {
+        const blocks = rawText.split(/\n\s*\n+/).map(b => b.trim()).filter(b => b.length > 0);
+        blocks.forEach((block, idx) => {
+          let label = `Estrofe ${idx + 1}`;
+          const matchTag = block.match(/^\[(.*?)\]/);
+          if (matchTag) label = matchTag[1];
+          deck.push({
+            type: 'verse',
+            label: label,
+            content: block.replace(/^\[(.*?)\]\s*/, '')
+          });
+        });
+      }
+
+      // Slide Final: Vazio com o tema ativo
+      deck.push({
+        type: 'blank',
+        label: 'Fim / Fundo Instrumental',
+        content: ''
+      });
+
+      return deck;
+    }
+
+    function getActiveSong() {
+      return repertoire.find(s => s.id === activeSongId) || repertoire[0];
+    }
+
+    function selectSong(id, keepSlideIndex = false) {
+      activeSongId = id;
+      const song = getActiveSong();
+      if (!song) return;
+
+      editTitle.value = song.title || "";
+      editTone.value = song.tone || "";
+      editLyrics.value = song.lyrics || "";
+      editTheme.value = song.theme || Object.keys(window.WORSHIP_THEMES || {})[0];
+      editFontFamily.value = song.fontFamily || "font-outfit";
+      editFontSize.value = song.fontSize || "3.8";
+      labelFontSize.textContent = `${editFontSize.value}rem`;
+
+      btnToggleUppercase.classList.toggle("bg-indigo-600", !!song.uppercase);
+      btnToggleUppercase.classList.toggle("text-white", !!song.uppercase);
+
+      alignButtons.forEach(btn => {
+        const matches = btn.dataset.align === (song.align || "text-center");
+        btn.classList.toggle("bg-indigo-600", matches);
+        btn.classList.toggle("text-white", matches);
+        btn.classList.toggle("text-slate-400", !matches);
+      });
+
+      activeSongDisplayTitle.textContent = song.title || "Sem Título";
+      if (song.tone) {
+        activeSongToneBadge.textContent = song.tone;
+        activeSongToneBadge.classList.remove("hidden");
+      } else {
+        activeSongToneBadge.classList.add("hidden");
+      }
+
+      structuredSlides = buildSongSlideDeck(song);
+      if (!keepSlideIndex || currentSlideIndex >= structuredSlides.length) {
+        currentSlideIndex = 0;
+      }
+
+      applyBackgroundScenario(song.theme);
+      renderRepertoireList();
+      renderSlideThumbnails();
+      updateStudioMonitors();
+      updatePresentationUI();
+      dispatchStateToAll();
+    }
+
+    let currentRenderedTheme = "";
+    function applyBackgroundScenario(themeKey) {
+      const themes = window.WORSHIP_THEMES || {};
+      const themeData = themes[themeKey] || themes[Object.keys(themes)[0]];
+      if (!themeData) return;
+
+      // Injeta variáveis CSS no escopo dos viewports
+      [liveViewportContainer, presentationViewport].forEach(vp => {
+        if (themeData.cssVariables) {
+          for (const [varName, varVal] of Object.entries(themeData.cssVariables)) {
+            vp.style.setProperty(varName, varVal);
+          }
+        }
+      });
+
+      // Atualiza os SVGs apenas se o tema mudou (evita resets durante as estrofes)
+      if (currentRenderedTheme !== themeKey) {
+        currentRenderedTheme = themeKey;
+        studioBgLayer.innerHTML = themeData.svgMarkup || "";
+        presBgLayer.innerHTML = themeData.svgMarkup || "";
+      }
+    }
+
+    function renderSlideHtml(slide, song, fontSizeRem) {
+      if (!slide) return "";
+
+      if (slide.type === 'title') {
+        return `
+          <div class="space-y-3 ${song.transition || 'trans-fade'}">
+            <p class="text-xs md:text-sm uppercase tracking-widest font-semibold projected-accent-color opacity-90">Louvor & Adoração</p>
+            <h1 class="${song.fontFamily || 'font-outfit'} font-extrabold leading-tight tracking-tight projected-text-color" style="font-size: ${parseFloat(fontSizeRem) * 1.15}rem;">
+              ${song.title || 'Sem Título'}
+            </h1>
+            ${song.tone ? `<div class="inline-block mt-2 font-mono text-xs md:text-sm font-bold px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 projected-accent-color">Tom: ${song.tone}</div>` : ''}
+          </div>
+        `;
+      }
+
+      if (slide.type === 'blank') {
+        return `
+          <div class="opacity-0 pointer-events-none select-none">
+            <span class="text-xs">(Instrumental / Fundo)</span>
+          </div>
+        `;
+      }
+
+      let text = slide.content || "";
+      if (song.uppercase) text = text.toUpperCase();
+
+      return `
+        <p class="${song.fontFamily || 'font-outfit'} ${song.transition || 'trans-fade'} font-bold leading-tight whitespace-pre-line projected-text-color ${song.align || 'text-center'}" style="font-size: ${fontSizeRem}rem;">
+          ${text}
+        </p>
+      `;
+    }
+
+    function updateStudioMonitors() {
+      if (structuredSlides.length === 0) return;
+      if (currentSlideIndex < 0) currentSlideIndex = 0;
+      if (currentSlideIndex >= structuredSlides.length) currentSlideIndex = structuredSlides.length - 1;
+
+      const song = getActiveSong();
+      const currentSlide = structuredSlides[currentSlideIndex];
+
+      previewCurrentNum.textContent = currentSlideIndex + 1;
+      previewTotalNum.textContent = structuredSlides.length;
+      previewSlideTypeTag.textContent = currentSlide.label;
+
+      studioSlideContent.innerHTML = renderSlideHtml(currentSlide, song, "2.2");
+
+      if (currentSlideIndex + 1 < structuredSlides.length) {
+        const nextSlide = structuredSlides[currentSlideIndex + 1];
+        previewNextBadge.textContent = nextSlide.label;
+        if (nextSlide.type === 'title') {
+          studioNextContent.textContent = `[Início] ${song.title}`;
+        } else if (nextSlide.type === 'blank') {
+          studioNextContent.textContent = `[Fim da Canção] — Fundo sem letra`;
+        } else {
+          studioNextContent.textContent = nextSlide.content.substring(0, 100) + '...';
+        }
+      } else {
+        const songIdx = repertoire.findIndex(s => s.id === activeSongId);
+        if (songIdx >= 0 && songIdx < repertoire.length - 1) {
+          studioNextContent.textContent = `Próxima Música: ${repertoire[songIdx + 1].title}`;
+          previewNextBadge.textContent = "Próx. Louvor";
+        } else {
+          studioNextContent.textContent = "— Fim da Coletânea —";
+          previewNextBadge.textContent = "Fim";
+        }
+      }
+
+      updateThumbnailHighlights();
+    }
+
+    function updatePresentationUI() {
+      const song = getActiveSong();
+      if (!song || structuredSlides.length === 0) return;
+
+      const songIdx = repertoire.findIndex(s => s.id === activeSongId);
+      const songNumStr = String(songIdx >= 0 ? songIdx + 1 : 1).padStart(2, '0');
+
+      presSongIndexBadge.textContent = `#${songNumStr}`;
+      presSongTitle.textContent = song.title || "Sem Título";
+
+      if (song.tone) {
+        presSongToneBadge.textContent = song.tone;
+        presSongToneBadge.classList.remove("hidden");
+      } else {
+        presSongToneBadge.classList.add("hidden");
+      }
+
+      const curSlide = structuredSlides[currentSlideIndex];
+      presSlideCur.textContent = currentSlideIndex + 1;
+      presSlideTot.textContent = structuredSlides.length;
+
+      presSlideContent.innerHTML = renderSlideHtml(curSlide, song, song.fontSize || "3.8");
+
+      if (currentSlideIndex + 1 < structuredSlides.length) {
+        const next = structuredSlides[currentSlideIndex + 1];
+        if (next.type === 'title') presNextHintText.textContent = `[Capa] ${song.title}`;
+        else if (next.type === 'blank') presNextHintText.textContent = `[Instrumental]`;
+        else presNextHintText.textContent = next.content.replace(/\n/g, ' ').substring(0, 32) + '...';
+      } else {
+        presNextHintText.textContent = "(Fim da música)";
+      }
+
+      if (isBlackout) {
+        presBlackoutOverlay.classList.remove("opacity-0", "pointer-events-none");
+        presBlackoutOverlay.classList.add("opacity-100");
+      } else {
+        presBlackoutOverlay.classList.add("opacity-0", "pointer-events-none");
+        presBlackoutOverlay.classList.remove("opacity-100");
+      }
+
+      if (isTextCleared) {
+        presTextHolder.classList.add("opacity-0");
+      } else {
+        presTextHolder.classList.remove("opacity-0");
+      }
+    }
+
+    function renderSlideThumbnails() {
+      slideThumbnailsBar.innerHTML = "";
+      structuredSlides.forEach((slide, idx) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `flex-shrink-0 w-36 h-20 rounded-xl p-2 text-left text-[11px] overflow-hidden border transition-all flex flex-col justify-between ${
+          idx === currentSlideIndex 
+            ? "border-indigo-500 bg-indigo-950/80 ring-2 ring-indigo-500/50 text-white font-semibold scale-105 shadow-md"
+            : "border-slate-800 bg-slate-950/70 hover:border-slate-700 text-slate-400"
+        }`;
+        card.dataset.index = idx;
+
+        let previewText = "";
+        let badgeColor = "text-indigo-300";
+
+        if (slide.type === 'title') {
+          previewText = slide.title;
+          badgeColor = "text-amber-400";
+        } else if (slide.type === 'blank') {
+          previewText = "✨ Fundo Instrumental";
+          badgeColor = "text-emerald-400";
+        } else {
+          previewText = slide.content;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-[10px]">
+            <span class="font-bold ${badgeColor} truncate max-w-[90px]">${slide.label}</span>
+            <span class="text-slate-500 font-mono">#${idx + 1}</span>
+          </div>
+          <div class="line-clamp-2 leading-tight text-[11px] text-slate-300">${previewText}</div>
+        `;
+
+        card.addEventListener("click", () => {
+          currentSlideIndex = idx;
+          updateStudioMonitors();
+          updatePresentationUI();
+          dispatchStateToAll();
+        });
+
+        slideThumbnailsBar.appendChild(card);
+      });
+      scrollThumbnailIntoView();
+    }
+
+    function updateThumbnailHighlights() {
+      const cards = slideThumbnailsBar.querySelectorAll("button");
+      cards.forEach((card, idx) => {
+        if (idx === currentSlideIndex) {
+          card.className = "flex-shrink-0 w-36 h-20 rounded-xl p-2 text-left text-[11px] overflow-hidden border transition-all flex flex-col justify-between border-indigo-500 bg-indigo-950/80 ring-2 ring-indigo-500/50 text-white font-semibold scale-105 shadow-md";
+        } else {
+          card.className = "flex-shrink-0 w-36 h-20 rounded-xl p-2 text-left text-[11px] overflow-hidden border transition-all flex flex-col justify-between border-slate-800 bg-slate-950/70 hover:border-slate-700 text-slate-400";
+        }
+      });
+      scrollThumbnailIntoView();
+    }
+
+    function scrollThumbnailIntoView() {
+      const activeCard = slideThumbnailsBar.querySelector(`button[data-index="${currentSlideIndex}"]`);
+      if (activeCard) {
+        activeCard.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    }
+
+    /* =========================================================================
+       SINCRONIZAÇÃO DA 2ª TELA COM temas.js
+       ========================================================================= */
+    function buildCurrentStatePayload() {
+      const song = getActiveSong();
+      if (!song || structuredSlides.length === 0) return null;
+
+      const currentSlide = structuredSlides[currentSlideIndex];
+      const themes = window.WORSHIP_THEMES || {};
+      const themeData = themes[song.theme] || themes[Object.keys(themes)[0]];
+
+      return {
+        type: "LYRIC_SYNC_V5",
+        timestamp: Date.now(),
+        themeKey: song.theme,
+        themeData: themeData,
+        fontFamily: song.fontFamily || "font-outfit",
+        fontSize: song.fontSize || "3.8",
+        align: song.align || "text-center",
+        transition: song.transition || "trans-fade",
+        slide: currentSlide,
+        songTitle: song.title || "",
+        songTone: song.tone || "",
+        songUppercase: !!song.uppercase,
+        isBlackout: isBlackout,
+        isTextCleared: isTextCleared
+      };
+    }
+
+    function dispatchStateToAll() {
+      const payload = buildCurrentStatePayload();
+      if (!payload) return;
+
+      if (projectorWindowRef && !projectorWindowRef.closed) {
+        try {
+          if (typeof projectorWindowRef.receiveStudioUpdate === "function") {
+            projectorWindowRef.receiveStudioUpdate(payload);
+          }
+        } catch (e) {}
+
+        try {
+          projectorWindowRef.postMessage(payload, "*");
+        } catch (e) {}
+      }
+
+      if (broadcastChannel) {
+        try { broadcastChannel.postMessage(payload); } catch (e) {}
+      }
+    }
+
+    function openProjectorWindow() {
+      if (projectorWindowRef && !projectorWindowRef.closed) {
+        projectorWindowRef.focus();
+        dispatchStateToAll();
+        return;
+      }
+
+      projectorWindowRef = window.open(
+        "", 
+        "LyricSlideProjectorWindow", 
+        "width=1280,height=720,menubar=no,toolbar=no,location=no,status=no,resizable=yes"
+      );
+
+      if (!projectorWindowRef) {
+        alert("O navegador bloqueou a abertura do Telão. Permita pop-ups para usar a 2ª tela.");
+        return;
+      }
+
+      const pDoc = projectorWindowRef.document;
+      pDoc.open();
+      pDoc.write(`<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <title>Telão do Projetor - LyricSlide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@400;600;700&family=Merriweather:wght@400;700&family=Outfit:wght@600;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <style>
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; user-select: none; }
+    .font-outfit { font-family: 'Outfit', sans-serif; }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-serif-classic { font-family: 'Merriweather', serif; }
+    .font-serif-display { font-family: 'Playfair Display', serif; }
+
+    .bg-stage-surface {
+      background: var(--bg-gradient, #0b0f19);
+      transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .projected-text-color {
+      color: var(--text-color, #ffffff);
+      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.95);
+    }
+    .projected-accent-color {
+      color: var(--title-accent, #93c5fd);
+    }
+
+    @keyframes slowFloat { 0%, 100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-10px) scale(1.02); } }
+    @keyframes gentlePulse { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 0.95; transform: scale(1.04); } }
+    @keyframes slowRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes waveHorizontal { 0% { transform: translateX(0); } 50% { transform: translateX(-30px); } 100% { transform: translateX(0); } }
+
+    .anim-float { animation: slowFloat 9s ease-in-out infinite; }
+    .anim-pulse-gentle { animation: gentlePulse 8s ease-in-out infinite; }
+    .anim-rotate-slow { animation: slowRotate 75s linear infinite; transform-origin: center; }
+    .anim-wave-slow { animation: waveHorizontal 14s ease-in-out infinite; }
+
+    .trans-fade { animation: textFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes textFade { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: scale(1); } }
+    .trans-slide-up { animation: textSlideUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes textSlideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="h-full w-full">
+  <div id="projectorViewport" class="w-full h-full flex items-center justify-center p-8 md:p-20 relative bg-stage-surface overflow-hidden">
+    <div id="projectorBgLayer" class="absolute inset-0 pointer-events-none z-0 overflow-hidden"></div>
+    <div id="blackoutCover" class="absolute inset-0 bg-black opacity-0 pointer-events-none transition-opacity duration-200 z-50"></div>
+    <div id="textHolder" class="w-full max-w-6xl mx-auto flex items-center justify-center transition-opacity duration-200 z-10">
+      <div id="projectorSlideContent" class="w-full text-center"></div>
+    </div>
+  </div>
+
+  <script>
+    const viewport = document.getElementById("projectorViewport");
+    const bgLayer = document.getElementById("projectorBgLayer");
+    const blackoutCover = document.getElementById("blackoutCover");
+    const textHolder = document.getElementById("textHolder");
+    const slideContent = document.getElementById("projectorSlideContent");
+
+    let currentThemeKey = "";
+
+    window.receiveStudioUpdate = function(data) {
+      if (!data) return;
+
+      // 1. Aplica variáveis CSS e SVG do tema
+      if (currentThemeKey !== data.themeKey) {
+        currentThemeKey = data.themeKey;
+        if (data.themeData && data.themeData.cssVariables) {
+          for (const [varName, varVal] of Object.entries(data.themeData.cssVariables)) {
+            viewport.style.setProperty(varName, varVal);
+          }
+        }
+        bgLayer.innerHTML = (data.themeData && data.themeData.svgMarkup) || "";
+      }
+
+      // 2. Renderiza Conteúdo do Slide
+      const slide = data.slide;
+      if (slide) {
+        if (slide.type === 'title') {
+          slideContent.innerHTML = \`
+            <div class="space-y-3 \${data.transition || 'trans-fade'}">
+              <p class="text-sm md:text-base uppercase tracking-widest font-semibold projected-accent-color opacity-90">Louvor & Adoração</p>
+              <h1 class="\${data.fontFamily || 'font-outfit'} font-extrabold leading-tight tracking-tight projected-text-color" style="font-size: \${parseFloat(data.fontSize || 3.8) * 1.15}rem;">
+                \${data.songTitle || 'Sem Título'}
+              </h1>
+              \${data.songTone ? \`<div class="inline-block mt-3 font-mono text-sm font-bold px-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/20 projected-accent-color">Tom: \${data.songTone}</div>\` : ''}
+            </div>
+          \`;
+        } else if (slide.type === 'blank') {
+          slideContent.innerHTML = "";
+        } else {
+          let text = slide.content || "";
+          if (data.songUppercase) text = text.toUpperCase();
+          slideContent.innerHTML = \`
+            <p class="\${data.fontFamily || 'font-outfit'} \${data.transition || 'trans-fade'} font-bold leading-tight whitespace-pre-line projected-text-color \${data.align || 'text-center'}" style="font-size: \${data.fontSize || 3.8}rem;">
+              \${text}
+            </p>
+          \`;
+        }
+      }
+
+      // 3. Blackout e Limpar
+      if (data.isBlackout) {
+        blackoutCover.classList.remove("opacity-0", "pointer-events-none");
+        blackoutCover.classList.add("opacity-100");
+      } else {
+        blackoutCover.classList.add("opacity-0", "pointer-events-none");
+        blackoutCover.classList.remove("opacity-100");
+      }
+
+      if (data.isTextCleared) {
+        textHolder.classList.add("opacity-0");
+      } else {
+        textHolder.classList.remove("opacity-0");
+      }
+    };
+
+    window.addEventListener("message", (e) => {
+      if (e.data && e.data.type === "LYRIC_SYNC_V5") window.receiveStudioUpdate(e.data);
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "f" || e.key === "F") {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+        else document.exitFullscreen().catch(()=>{});
+      }
+    });
+
+    window.addEventListener("dblclick", () => {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+      else document.exitFullscreen().catch(()=>{});
+    });
+  <\/script>
+</body>
+</html>`);
+      pDoc.close();
+      setTimeout(dispatchStateToAll, 200);
+    }
+
+    btnOpenProjectorWindow.addEventListener("click", openProjectorWindow);
+
+    /* =========================================================================
+       NAVEGAÇÃO
+       ========================================================================= */
+    function nextSlide() {
+      if (currentSlideIndex < structuredSlides.length - 1) {
+        currentSlideIndex++;
+        updateStudioMonitors();
+        updatePresentationUI();
+        dispatchStateToAll();
+      } else {
+        const curIdx = repertoire.findIndex(s => s.id === activeSongId);
+        if (curIdx >= 0 && curIdx < repertoire.length - 1) {
+          selectSong(repertoire[curIdx + 1].id);
+        }
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        updateStudioMonitors();
+        updatePresentationUI();
+        dispatchStateToAll();
+      } else {
+        const curIdx = repertoire.findIndex(s => s.id === activeSongId);
+        if (curIdx > 0) {
+          selectSong(repertoire[curIdx - 1].id);
+          currentSlideIndex = structuredSlides.length - 1;
+          updateStudioMonitors();
+          updatePresentationUI();
+          dispatchStateToAll();
+        }
+      }
+    }
+
+    function toggleBlackout() {
+      isBlackout = !isBlackout;
+      if (isBlackout) {
+        studioBlackoutOverlay.classList.remove("opacity-0", "pointer-events-none");
+        studioBlackoutOverlay.classList.add("opacity-100");
+        blackoutDot.classList.replace("bg-rose-500", "bg-emerald-400");
+        blackoutLabel.textContent = "Reativar [B]";
+      } else {
+        studioBlackoutOverlay.classList.add("opacity-0", "pointer-events-none");
+        studioBlackoutOverlay.classList.remove("opacity-100");
+        blackoutDot.classList.replace("bg-emerald-400", "bg-rose-500");
+        blackoutLabel.textContent = "Blackout [B]";
+      }
+      updatePresentationUI();
+      dispatchStateToAll();
+    }
+
+    function toggleClearText() {
+      isTextCleared = !isTextCleared;
+      if (isTextCleared) {
+        studioSlideContent.classList.add("opacity-0");
+        clearTextLabel.textContent = "Mostrar [C]";
+      } else {
+        studioSlideContent.classList.remove("opacity-0");
+        clearTextLabel.textContent = "Limpar [C]";
+      }
+      updatePresentationUI();
+      dispatchStateToAll();
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(()=>{});
+      } else {
+        document.exitFullscreen().catch(()=>{});
+      }
+    }
+
+    function setAppMode(mode) {
+      currentAppMode = mode;
+      if (catalogLayout) catalogLayout.classList.toggle("hidden", mode !== "catalog");
+      if (studioLayout) studioLayout.classList.toggle("hidden", mode !== "window" && mode !== "studio");
+      if (presentationLayout) presentationLayout.classList.toggle("hidden", mode !== "presentation");
+
+      if (modeBtnCatalog) {
+        modeBtnCatalog.classList.toggle("bg-indigo-600", mode === "catalog");
+        modeBtnCatalog.classList.toggle("text-white", mode === "catalog");
+        modeBtnCatalog.classList.toggle("text-slate-400", mode !== "catalog");
+      }
+      if (modeBtnWindow) {
+        modeBtnWindow.classList.toggle("bg-indigo-600", mode === "window" || mode === "studio");
+        modeBtnWindow.classList.toggle("text-white", mode === "window" || mode === "studio");
+        modeBtnWindow.classList.toggle("text-slate-400", mode !== "window" && mode !== "studio");
+      }
+
+      if (mode === "catalog") {
+        renderCatalogGrid();
+        if (catalogSearchInput) setTimeout(() => catalogSearchInput.focus(), 80);
+      } else if (mode === "presentation") {
+        updatePresentationUI();
+      }
+      dispatchStateToAll();
+    }
+
+    if (modeBtnCatalog) modeBtnCatalog.addEventListener("click", () => setAppMode("catalog"));
+    if (btnReturnToCatalogFromPres) btnReturnToCatalogFromPres.addEventListener("click", () => setAppMode("catalog"));
+    if (btnCatalogOpenStudio) btnCatalogOpenStudio.addEventListener("click", () => setAppMode("window"));
+    const btnCatalogToggleFullscreen = document.getElementById("btnCatalogToggleFullscreen");
+    if (btnCatalogToggleFullscreen) btnCatalogToggleFullscreen.addEventListener("click", toggleFullscreen);
+    if (btnCatalogStartPres) {
+      btnCatalogStartPres.addEventListener("click", () => {
+        if (!activeSongId && repertoire.length > 0) selectSong(repertoire[0].id);
+        setAppMode("presentation");
+      });
+    }
+    modeBtnPresentation.addEventListener("click", () => setAppMode("presentation"));
+    btnReturnToStudio.addEventListener("click", () => setAppMode("window"));
+    modeBtnWindow.addEventListener("click", () => setAppMode("window"));
+
+    if (catalogSearchInput) {
+      catalogSearchInput.addEventListener("input", renderCatalogGrid);
+      catalogSearchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const firstCard = catalogCardsGrid?.querySelector(".btn-card-present");
+          if (firstCard) {
+            firstCard.click();
+          } else if (repertoire.length > 0) {
+            selectSong(repertoire[0].id);
+            setAppMode("presentation");
+          }
+        } else if (e.key === "Escape") {
+          catalogSearchInput.value = "";
+          renderCatalogGrid();
+        }
+      });
+    }
+
+    if (btnCatalogResetSearch) {
+      btnCatalogResetSearch.addEventListener("click", () => {
+        if (catalogSearchInput) catalogSearchInput.value = "";
+        renderCatalogGrid();
+        catalogSearchInput?.focus();
+      });
+    }
+
+    let hudTimeout;
+    function resetHUDIdle() {
+      presHUD.classList.remove("hud-idle");
+      clearTimeout(hudTimeout);
+      hudTimeout = setTimeout(() => presHUD.classList.add("hud-idle"), 3500);
+    }
+    window.addEventListener("mousemove", resetHUDIdle);
+
+    presLeftHotspot.addEventListener("click", prevSlide);
+    presRightHotspot.addEventListener("click", nextSlide);
+    presBtnBlackout.addEventListener("click", toggleBlackout);
+    presBtnClear.addEventListener("click", toggleClearText);
+    presBtnFullscreen.addEventListener("click", toggleFullscreen);
+    btnBlackout.addEventListener("click", toggleBlackout);
+    btnClearText.addEventListener("click", toggleClearText);
+    btnPrevSlide.addEventListener("click", prevSlide);
+    btnNextSlide.addEventListener("click", nextSlide);
+
+    /* =========================================================================
+       GAVETA [M] & SPOTLIGHT [Ctrl+K]
+       ========================================================================= */
+    function openNumberedDrawer() {
+      renderNumberedDrawerList();
+      drawerNumberedSongs.classList.remove("-translate-x-full");
+      drawerBackdrop.classList.remove("hidden");
+      setTimeout(() => drawerSearchInput.focus(), 150);
+    }
+
+    function closeNumberedDrawer() {
+      drawerNumberedSongs.classList.add("-translate-x-full");
+      drawerBackdrop.classList.add("hidden");
+      drawerSearchInput.value = "";
+    }
+
+    btnOpenDrawerFromPres.addEventListener("click", openNumberedDrawer);
+    btnCloseNumberedDrawer.addEventListener("click", closeNumberedDrawer);
+    drawerBackdrop.addEventListener("click", closeNumberedDrawer);
+
+    function renderNumberedDrawerList() {
+      drawerListContainer.innerHTML = "";
+      const q = (drawerSearchInput.value || "").trim().toLowerCase();
+
+      repertoire.forEach((song, idx) => {
+        const numStr = String(idx + 1).padStart(2, '0');
+        const title = (song.title || "").toLowerCase();
+        const lyrics = (song.lyrics || "").toLowerCase();
+
+        if (q && !title.includes(q) && !lyrics.includes(q) && !numStr.includes(q)) return;
+
+        const isActive = song.id === activeSongId;
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = `w-full text-left p-2.5 rounded-xl border flex items-center justify-between transition group ${
+          isActive 
+            ? "bg-indigo-600 border-indigo-400 text-white shadow-md font-semibold"
+            : "bg-slate-900/60 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
+        }`;
+
+        item.innerHTML = `
+          <div class="flex items-center space-x-3 overflow-hidden">
+            <span class="font-mono text-xs font-bold px-2 py-1 rounded ${isActive ? 'bg-white/20 text-white' : 'bg-slate-800 text-indigo-400 border border-slate-700'}">[${numStr}]</span>
+            <div class="truncate">
+              <div class="text-xs truncate font-medium">${song.title}</div>
+              <div class="text-[10px] text-slate-400 truncate opacity-70">${(song.lyrics || "").substring(0, 32)}...</div>
+            </div>
+          </div>
+          ${song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'bg-white/20' : 'bg-slate-800 border border-slate-700 text-slate-400'}">${song.tone}</span>` : ''}
+        `;
+
+        item.addEventListener("click", () => {
+          selectSong(song.id);
+          closeNumberedDrawer();
+        });
+
+        drawerListContainer.appendChild(item);
+      });
+    }
+
+    drawerSearchInput.addEventListener("input", renderNumberedDrawerList);
+
+    function openSpotlight() {
+      modalSpotlightSearch.classList.remove("hidden");
+      spotlightInput.value = "";
+      spotlightSelectedIndex = 0;
+      renderSpotlightResults();
+      setTimeout(() => spotlightInput.focus(), 50);
+    }
+
+    function closeSpotlight() {
+      modalSpotlightSearch.classList.add("hidden");
+    }
+
+    btnOpenSpotlightSearch.addEventListener("click", openSpotlight);
+
+    function renderSpotlightResults() {
+      spotlightResultsList.innerHTML = "";
+      const q = spotlightInput.value.trim().toLowerCase();
+
+      const results = repertoire.map((song, idx) => ({
+        song,
+        index: idx + 1,
+        numStr: String(idx + 1).padStart(2, '0')
+      })).filter(item => {
+        if (!q) return true;
+        const inNum = item.numStr.includes(q) || String(item.index) === q;
+        const inTitle = item.song.title.toLowerCase().includes(q);
+        const inLyrics = item.song.lyrics.toLowerCase().includes(q);
+        return inNum || inTitle || inLyrics;
+      });
+
+      if (results.length === 0) {
+        spotlightResultsList.innerHTML = `<div class="p-6 text-center text-xs text-slate-500">Nenhuma canção encontrada para "${q}"</div>`;
+        return;
+      }
+
+      if (spotlightSelectedIndex >= results.length) spotlightSelectedIndex = 0;
+
+      results.forEach((item, rIdx) => {
+        const isSelected = rIdx === spotlightSelectedIndex;
+        const row = document.createElement("div");
+        row.className = `p-2.5 rounded-xl cursor-pointer flex items-center justify-between transition ${
+          isSelected ? "bg-indigo-600 text-white font-semibold shadow-md" : "hover:bg-slate-800 text-slate-300"
+        }`;
+
+        row.innerHTML = `
+          <div class="flex items-center space-x-3 overflow-hidden">
+            <span class="font-mono text-xs px-2 py-0.5 rounded font-bold ${isSelected ? 'bg-white/20 text-white' : 'bg-slate-800 text-indigo-400 border border-slate-700'}">[${item.numStr}]</span>
+            <span class="text-xs truncate font-medium">${item.song.title}</span>
+          </div>
+          ${item.song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${isSelected ? 'bg-white/20' : 'bg-slate-800 border border-slate-700 text-slate-400'}">${item.song.tone}</span>` : ''}
+        `;
+
+        row.addEventListener("click", () => {
+          selectSong(item.song.id);
+          closeSpotlight();
+        });
+
+        spotlightResultsList.appendChild(row);
+      });
+    }
+
+    spotlightInput.addEventListener("input", () => {
+      spotlightSelectedIndex = 0;
+      renderSpotlightResults();
+    });
+
+    spotlightInput.addEventListener("keydown", (e) => {
+      const rows = spotlightResultsList.children;
+      if (rows.length === 0) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        spotlightSelectedIndex = (spotlightSelectedIndex + 1) % rows.length;
+        renderSpotlightResults();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        spotlightSelectedIndex = (spotlightSelectedIndex - 1 + rows.length) % rows.length;
+        renderSpotlightResults();
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        const selected = rows[spotlightSelectedIndex];
+        if (selected) selected.click();
+      } else if (e.key === "Escape") {
+        closeSpotlight();
+      }
+    });
+
+    modalSpotlightSearch.addEventListener("click", (e) => {
+      if (e.target === modalSpotlightSearch) closeSpotlight();
+    });
+
+    // Atalhos do Teclado
+    window.addEventListener("keydown", (e) => {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) {
+        if (e.key === "Escape") e.target.blur();
+        return;
+      }
+
+      if (e.key === "/" || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k")) {
+        e.preventDefault();
+        openSpotlight();
+        return;
+      }
+
+      if (e.key === "m" || e.key === "M") {
+        e.preventDefault();
+        if (drawerNumberedSongs.classList.contains("-translate-x-full")) openNumberedDrawer();
+        else closeNumberedDrawer();
+        return;
+      }
+
+      if (e.key === "e" || e.key === "E") {
+        e.preventDefault();
+        setAppMode(currentAppMode === "presentation" ? "window" : "presentation");
+        return;
+      }
+
+      switch (e.key) {
+        case "ArrowRight":
+        case "ArrowDown":
+        case " ":
+        case "PageDown":
+        case "Enter":
+          e.preventDefault();
+          nextSlide();
+          break;
+        case "ArrowLeft":
+        case "ArrowUp":
+        case "PageUp":
+        case "Backspace":
+          e.preventDefault();
+          prevSlide();
+          break;
+        case "b":
+        case "B":
+          e.preventDefault();
+          toggleBlackout();
+          break;
+        case "c":
+        case "C":
+          e.preventDefault();
+          toggleClearText();
+          break;
+        case "f":
+        case "F":
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case "Escape":
+          if (drawerNumberedSongs && !drawerNumberedSongs.classList.contains("-translate-x-full")) {
+            closeNumberedDrawer();
+          } else if (modalSpotlightSearch && !modalSpotlightSearch.classList.contains("hidden")) {
+            closeSpotlight();
+          } else if (currentAppMode !== "catalog") {
+            setAppMode("catalog");
+          }
+          break;
+      }
+    });
+
+    /* =========================================================================
+       PERSISTÊNCIA
+       ========================================================================= */
+    function loadSavedCollection() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          const isOldPlaceholder = Array.isArray(parsed) && parsed.length === 3 && parsed[0]?.title === "A Esperança Renova";
+          if (Array.isArray(parsed) && parsed.length > 0 && !isOldPlaceholder) {
+            repertoire = parsed;
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Iniciando com o repertório padrão", err);
+      }
+      repertoire = JSON.parse(JSON.stringify(DEFAULT_REPERTOIRE));
+    }
+
+    function saveCollectionToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(repertoire));
+      } catch (e) {
+        console.error("Erro ao salvar no storage local", e);
+      }
+      repertoireCountBadge.textContent = repertoire.length;
+      if (typeof renderCatalogGrid === "function") renderCatalogGrid();
+    }
+
+    /* =========================================================================
+       CATÁLOGO DE MÚSICAS / PÁGINA INICIAL (ESTILO ÁGUAS VIVAS & MERRIWEATHER)
+       ========================================================================= */
+    function renderCatalogGrid() {
+      if (!catalogCardsGrid) return;
+      catalogCardsGrid.innerHTML = "";
+      const query = (catalogSearchInput?.value || "").trim().toLowerCase();
+
+      let visibleCount = 0;
+      repertoire.forEach((song, idx) => {
+        const title = (song.title || "").toLowerCase();
+        const lyrics = (song.lyrics || "").toLowerCase();
+        const numStr = String(idx + 1).padStart(2, '0');
+
+        if (query && !title.includes(query) && !lyrics.includes(query) && !numStr.includes(query)) {
+          return;
+        }
+
+        visibleCount++;
+        const card = document.createElement("div");
+        // Sem hover:-translate para NUNCA haver corte da borda superior pelo overflow
+        card.className = "bg-[#06232d]/40 hover:bg-[#06232d]/85 border border-teal-900/50 hover:border-[#5eead4]/60 rounded-2xl p-4 md:p-5 transition-colors duration-200 shadow-md hover:shadow-teal-950/60 flex items-center justify-between group cursor-pointer backdrop-blur-md";
+
+        card.innerHTML = `
+          <div class="flex items-center space-x-3.5 md:space-x-4 overflow-hidden pr-2">
+            <span class="font-mono text-xs font-bold px-2.5 py-1 rounded-xl bg-teal-950/80 border border-teal-500/30 text-[#5eead4] shrink-0">
+              ${numStr}
+            </span>
+            <h3 class="font-serif-classic font-bold text-base md:text-lg text-[#ccfbf1] group-hover:text-[#5eead4] transition-colors duration-200 leading-snug truncate" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+              ${song.title || "Sem Título"}
+            </h3>
+          </div>
+
+          <div class="h-8 w-8 md:h-9 md:w-9 rounded-full bg-teal-950/60 group-hover:bg-teal-400/20 text-[#5eead4] border border-teal-500/30 group-hover:border-[#5eead4]/60 flex items-center justify-center shrink-0 transition-colors duration-200 shadow-sm">
+            <i class="fa-solid fa-play text-[11px] md:text-xs pl-0.5 group-hover:scale-110 transition-transform"></i>
+          </div>
+        `;
+
+        card.addEventListener("click", () => {
+          selectSong(song.id);
+          setAppMode("presentation");
+        });
+
+        catalogCardsGrid.appendChild(card);
+      });
+
+      if (catalogEmptyState) {
+        catalogEmptyState.classList.toggle("hidden", visibleCount > 0);
+      }
+    }
+
+    function renderRepertoireList() {
+      repertoireList.innerHTML = "";
+      const query = (searchSongInput.value || "").trim().toLowerCase();
+
+      repertoire.forEach((song, idx) => {
+        const title = (song.title || "").toLowerCase();
+        const lyrics = (song.lyrics || "").toLowerCase();
+        const numStr = String(idx + 1).padStart(2, '0');
+
+        if (query && !title.includes(query) && !lyrics.includes(query) && !numStr.includes(query)) return;
+
+        const isActive = song.id === activeSongId;
+        const item = document.createElement("div");
+        item.className = `p-2.5 rounded-xl border cursor-pointer transition flex items-center justify-between group ${
+          isActive 
+            ? "bg-indigo-950/60 border-indigo-500/70 text-white shadow-sm" 
+            : "bg-slate-950/40 hover:bg-slate-800/60 border-slate-800 text-slate-300"
+        }`;
+
+        item.innerHTML = `
+          <div class="flex items-center space-x-2.5 overflow-hidden">
+            <span class="font-mono text-[11px] font-bold text-slate-500">[${numStr}]</span>
+            <div class="overflow-hidden">
+              <div class="text-xs font-semibold truncate ${isActive ? 'text-indigo-200' : 'text-slate-200'}">${song.title || "Sem título"}</div>
+              <div class="text-[10px] text-slate-500 truncate">${(song.lyrics || "").substring(0, 28)}...</div>
+            </div>
+          </div>
+          ${song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">${song.tone}</span>` : ''}
+        `;
+
+        item.addEventListener("click", () => {
+          if (song.id !== activeSongId) selectSong(song.id);
+        });
+
+        repertoireList.appendChild(item);
+      });
+      repertoireCountBadge.textContent = repertoire.length;
+      if (typeof renderCatalogGrid === "function") renderCatalogGrid();
+    }
+
+    searchSongInput.addEventListener("input", renderRepertoireList);
+
+    function saveCurrentSongFromForm() {
+      const song = getActiveSong();
+      if (!song) return;
+
+      song.title = editTitle.value.trim() || "Música Sem Título";
+      song.tone = editTone.value.trim();
+      song.lyrics = editLyrics.value;
+      song.theme = editTheme.value;
+      song.fontFamily = editFontFamily.value;
+      song.fontSize = editFontSize.value;
+
+      saveCollectionToStorage();
+      selectSong(song.id, true);
+    }
+
+    editTheme.addEventListener("change", () => {
+      const song = getActiveSong();
+      if (song) {
+        song.theme = editTheme.value;
+        applyBackgroundScenario(song.theme);
+        updateStudioMonitors();
+        updatePresentationUI();
+        saveCollectionToStorage();
+        dispatchStateToAll();
+      }
+    });
+
+    editFontFamily.addEventListener("change", () => {
+      const song = getActiveSong();
+      if (song) {
+        song.fontFamily = editFontFamily.value;
+        updateStudioMonitors();
+        updatePresentationUI();
+        saveCollectionToStorage();
+        dispatchStateToAll();
+      }
+    });
+
+    editFontSize.addEventListener("input", (e) => {
+      const val = e.target.value;
+      labelFontSize.textContent = `${val}rem`;
+      const song = getActiveSong();
+      if (song) {
+        song.fontSize = val;
+        updateStudioMonitors();
+        updatePresentationUI();
+        saveCollectionToStorage();
+        dispatchStateToAll();
+      }
+    });
+
+    alignButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        alignButtons.forEach(b => {
+          b.classList.remove("bg-indigo-600", "text-white");
+          b.classList.add("text-slate-400");
+        });
+        btn.classList.add("bg-indigo-600", "text-white");
+        btn.classList.remove("text-slate-400");
+
+        const song = getActiveSong();
+        if (song) {
+          song.align = btn.dataset.align;
+          updateStudioMonitors();
+          updatePresentationUI();
+          saveCollectionToStorage();
+          dispatchStateToAll();
+        }
+      });
+    });
+
+    btnToggleUppercase.addEventListener("click", () => {
+      const song = getActiveSong();
+      if (song) {
+        song.uppercase = !song.uppercase;
+        btnToggleUppercase.classList.toggle("bg-indigo-600", song.uppercase);
+        btnToggleUppercase.classList.toggle("text-white", song.uppercase);
+        updateStudioMonitors();
+        updatePresentationUI();
+        saveCollectionToStorage();
+        dispatchStateToAll();
+      }
+    });
+
+    btnSaveSong.addEventListener("click", saveCurrentSongFromForm);
+
+    btnNewSong.addEventListener("click", () => {
+      const newId = `song_${Date.now()}`;
+      const defaultTheme = Object.keys(window.WORSHIP_THEMES || {})[0] || "theme-cross-grace";
+      const newSong = {
+        id: newId,
+        title: "Novo Cântico",
+        artist: "Ministério de Louvor",
+        tone: "G",
+        lyrics: `Primeira estrofe do louvor\nDigite as frases aqui\n\n[Refrão]\nSegunda estrofe (Refrão)\nDois Enters separam cada estrofe!`,
+        theme: defaultTheme,
+        fontFamily: "font-outfit",
+        fontSize: "3.8",
+        align: "text-center",
+        uppercase: false,
+        transition: "trans-fade"
+      };
+
+      repertoire.unshift(newSong);
+      saveCollectionToStorage();
+      selectSong(newId);
+    });
+
+    btnDuplicateSong.addEventListener("click", () => {
+      const current = getActiveSong();
+      if (!current) return;
+      const dupId = `song_${Date.now()}`;
+      const duplicated = JSON.parse(JSON.stringify(current));
+      duplicated.id = dupId;
+      duplicated.title = `${current.title} (Cópia)`;
+      repertoire.unshift(duplicated);
+      saveCollectionToStorage();
+      selectSong(dupId);
+    });
+
+    btnDeleteSong.addEventListener("click", () => {
+      if (repertoire.length <= 1) return;
+      const current = getActiveSong();
+      repertoire = repertoire.filter(s => s.id !== current.id);
+      saveCollectionToStorage();
+      selectSong(repertoire[0].id);
+    });
+
+    // Operações com Arquivo
+    async function selectPhysicalFile() {
+      try {
+        if ('showOpenFilePicker' in window) {
+          const [handle] = await window.showOpenFilePicker({
+            types: [{ description: 'Arquivo JSON da Coletânea', accept: { 'application/json': ['.json'] } }]
+          });
+          currentFileHandle = handle;
+          const file = await currentFileHandle.getFile();
+          const text = await file.text();
+          repertoire = JSON.parse(text);
+          saveCollectionToStorage();
+          selectSong(repertoire[0]?.id);
+          return true;
+        } else {
+          fileImportInput.click();
+          return true;
+        }
+      } catch (err) {
+        return false;
+      }
+    }
+
+    async function saveDirectToFile() {
+      const dataStr = JSON.stringify(repertoire, null, 2);
+      saveCollectionToStorage();
+
+      if (currentFileHandle) {
+        try {
+          const writable = await currentFileHandle.createWritable();
+          await writable.write(dataStr);
+          await writable.close();
+          alert("✅ Gravado diretamente no arquivo JSON conectado!");
+          return;
+        } catch (e) {
+          console.warn("Fallback de gravação", e);
+        }
+      }
+
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "coletanea.json";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
+    }
+
+// Startup modal desativado - inicia direto no catálogo
+    btnLinkFile.addEventListener("click", selectPhysicalFile);
+    btnSaveDirectFile.addEventListener("click", saveDirectToFile);
+
+    if (btnResetDefault) {
+      btnResetDefault.addEventListener("click", () => {
+        if (confirm("Deseja restaurar a coletânea padrão original (11 canções)? Quaisquer alterações não exportadas serão redefinidas.")) {
+          repertoire = JSON.parse(JSON.stringify(DEFAULT_REPERTOIRE));
+          saveCollectionToStorage();
+          renderRepertoireList();
+          if (repertoire.length > 0) selectSong(repertoire[0].id);
+        }
+      });
+    }
+
+    btnExportAll.addEventListener("click", () => {
+      const dataStr = JSON.stringify(repertoire, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "coletanea_worship.json";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
+    });
+
+    fileImportInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const content = event.target.result;
+          const parsed = JSON.parse(content);
+          if (Array.isArray(parsed)) {
+            repertoire = parsed;
+            saveCollectionToStorage();
+            selectSong(repertoire[0]?.id);
+          }
+        } catch (err) {
+          alert("Erro ao ler o arquivo JSON selecionado.");
+        } finally {
+          fileImportInput.value = "";
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // INICIALIZAÇÃO
+    populateThemesSelect();
+    loadSavedCollection();
+    if (repertoire.length > 0) {
+      selectSong(repertoire[0].id);
+    }
+    setAppMode("catalog");
+  </script>
+</body>
+</html>
