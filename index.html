@@ -129,25 +129,25 @@
       </div>
     </header>
 
-    <!-- Hero Central com Tipografia das Músicas (Merriweather) -->
-    <div class="relative z-10 px-6 md:px-12 pt-7 pb-4 max-w-4xl w-full mx-auto text-center shrink-0">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-500/30 text-[#5eead4] text-[11px] font-serif-classic font-semibold tracking-[0.25em] uppercase mb-2 shadow-sm">
-        <i class="fa-solid fa-water text-[10px]"></i>
+    <!-- Hero Central com Tipografia das Músicas (Merriweather) Responsivo Mobile -->
+    <div class="relative z-10 px-4 sm:px-6 md:px-12 pt-5 sm:pt-7 pb-3 sm:pb-4 max-w-4xl w-full mx-auto text-center shrink-0">
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-teal-950/80 border border-teal-500/30 text-[#5eead4] text-[10px] sm:text-[11px] font-serif-classic font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-1.5 sm:mb-2 shadow-sm">
+        <i class="fa-solid fa-water text-[9px] sm:text-[10px]"></i>
         <span>Adoração & Louvor</span>
       </div>
 
-      <h2 class="font-serif-classic font-bold text-3xl md:text-4xl text-[#ccfbf1] tracking-wide mb-2" style="text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);">
+      <h2 class="font-serif-classic font-bold text-2xl sm:text-3xl md:text-4xl text-[#ccfbf1] tracking-wide mb-1.5 sm:mb-2" style="text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);">
         Selecione um Louvor
       </h2>
-      <p class="text-xs md:text-sm text-teal-200/70 font-serif-classic font-normal max-w-md mx-auto">
+      <p class="text-[11px] sm:text-xs md:text-sm text-teal-200/70 font-serif-classic font-normal max-w-md mx-auto">
         Toque ou clique em qualquer canção para iniciar a projeção no telão.
       </p>
 
       <!-- Campo de Busca Perfeitamente Alinhado e Estilizado -->
-      <div class="mt-5 max-w-lg mx-auto relative">
-        <input type="text" id="catalogSearchInput" placeholder="Pesquisar louvor..." class="w-full bg-[#03141b]/70 hover:bg-[#03141b]/90 focus:bg-[#020a0e]/95 border border-teal-800/40 hover:border-teal-500/40 focus:border-[#5eead4] rounded-full pl-11 pr-12 py-3 text-sm text-[#ccfbf1] placeholder-teal-300/40 font-serif-classic focus:outline-none focus:ring-2 focus:ring-teal-400/20 shadow-2xl backdrop-blur-md transition-colors duration-200" autocomplete="off">
-        <i class="fa-solid fa-magnifying-glass text-[#5eead4]/70 absolute left-4 top-3.5 text-sm"></i>
-        <div class="absolute right-3.5 top-2.5">
+      <div class="mt-4 sm:mt-5 max-w-lg mx-auto relative">
+        <input type="text" id="catalogSearchInput" placeholder="Pesquisar louvor..." class="w-full bg-[#03141b]/70 hover:bg-[#03141b]/90 focus:bg-[#020a0e]/95 border border-teal-800/40 hover:border-teal-500/40 focus:border-[#5eead4] rounded-full pl-10 sm:pl-11 pr-10 sm:pr-12 py-2.5 sm:py-3 text-xs sm:text-sm text-[#ccfbf1] placeholder-teal-300/40 font-serif-classic focus:outline-none focus:ring-2 focus:ring-teal-400/20 shadow-2xl backdrop-blur-md transition-colors duration-200" autocomplete="off">
+        <i class="fa-solid fa-magnifying-glass text-[#5eead4]/70 absolute left-3.5 sm:left-4 top-3 sm:top-3.5 text-xs sm:text-sm"></i>
+        <div class="absolute right-3 sm:right-3.5 top-2 sm:top-2.5">
           <kbd class="hidden sm:inline-block text-[10px] font-mono text-teal-300/70 bg-teal-950/80 border border-teal-700/40 px-2 py-0.5 rounded-full">ESC</kbd>
         </div>
       </div>
@@ -469,7 +469,7 @@
       </div>
     </header>
 
-    <div id="presentationViewport" class="flex-1 w-full h-full flex items-center justify-center p-8 md:p-20 relative bg-stage-surface overflow-hidden">
+    <div id="presentationViewport" class="flex-1 w-full h-full flex items-center justify-center px-4 py-8 sm:px-8 sm:py-12 md:p-20 relative bg-stage-surface overflow-hidden">
       <!-- Camada SVG Fixa Contínua (Não reseta na troca de estrofe) -->
       <div id="presBgLayer" class="absolute inset-0 pointer-events-none z-0 overflow-hidden"></div>
       <div id="presBlackoutOverlay" class="absolute inset-0 bg-black opacity-0 pointer-events-none transition-opacity duration-200 z-30"></div>
@@ -1153,7 +1153,7 @@ window.WORSHIP_THEMES = {
         return `
           <div class="space-y-3 ${song.transition || 'trans-fade'}">
             <p class="text-xs md:text-sm uppercase tracking-widest font-semibold projected-accent-color opacity-90">Louvor & Adoração</p>
-            <h1 class="${song.fontFamily || 'font-outfit'} font-extrabold leading-tight tracking-tight projected-text-color" style="font-size: ${parseFloat(fontSizeRem) * 1.15}rem;">
+            <h1 class="${song.fontFamily || 'font-outfit'} font-extrabold leading-tight tracking-tight projected-text-color" style="font-size: clamp(1.6rem, 7vw, ${parseFloat(fontSizeRem) * 1.15}rem);">
               ${song.title || 'Sem Título'}
             </h1>
             ${song.tone ? `<div class="inline-block mt-2 font-mono text-xs md:text-sm font-bold px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 projected-accent-color">Tom: ${song.tone}</div>` : ''}
@@ -1173,7 +1173,7 @@ window.WORSHIP_THEMES = {
       if (song.uppercase) text = text.toUpperCase();
 
       return `
-        <p class="${song.fontFamily || 'font-outfit'} ${song.transition || 'trans-fade'} font-bold leading-tight whitespace-pre-line projected-text-color ${song.align || 'text-center'}" style="font-size: ${fontSizeRem}rem;">
+        <p class="${song.fontFamily || 'font-outfit'} ${song.transition || 'trans-fade'} font-bold leading-snug whitespace-pre-line projected-text-color ${song.align || 'text-center'}" style="font-size: clamp(1.35rem, 5.5vw, ${fontSizeRem}rem);">
           ${text}
         </p>
       `;
@@ -1973,20 +1973,20 @@ window.WORSHIP_THEMES = {
         visibleCount++;
         const card = document.createElement("div");
         // Sem hover:-translate para NUNCA haver corte da borda superior pelo overflow
-        card.className = "bg-[#06232d]/40 hover:bg-[#06232d]/85 border border-teal-900/50 hover:border-[#5eead4]/60 rounded-2xl p-4 md:p-5 transition-colors duration-200 shadow-md hover:shadow-teal-950/60 flex items-center justify-between group cursor-pointer backdrop-blur-md";
+        card.className = "bg-[#06232d]/40 hover:bg-[#06232d]/85 border border-teal-900/50 hover:border-[#5eead4]/60 rounded-2xl p-3.5 sm:p-4 md:p-5 transition-colors duration-200 shadow-md hover:shadow-teal-950/60 flex items-center justify-between group cursor-pointer backdrop-blur-md";
 
         card.innerHTML = `
-          <div class="flex items-center space-x-3.5 md:space-x-4 overflow-hidden pr-2">
-            <span class="font-mono text-xs font-bold px-2.5 py-1 rounded-xl bg-teal-950/80 border border-teal-500/30 text-[#5eead4] shrink-0">
+          <div class="flex items-center space-x-3 sm:space-x-3.5 md:space-x-4 overflow-hidden pr-2">
+            <span class="font-mono text-[11px] sm:text-xs font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-xl bg-teal-950/80 border border-teal-500/30 text-[#5eead4] shrink-0">
               ${numStr}
             </span>
-            <h3 class="font-serif-classic font-bold text-base md:text-lg text-[#ccfbf1] group-hover:text-[#5eead4] transition-colors duration-200 leading-snug truncate" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+            <h3 class="font-serif-classic font-bold text-sm sm:text-base md:text-lg text-[#ccfbf1] group-hover:text-[#5eead4] transition-colors duration-200 leading-snug truncate" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
               ${song.title || "Sem Título"}
             </h3>
           </div>
 
-          <div class="h-8 w-8 md:h-9 md:w-9 rounded-full bg-teal-950/60 group-hover:bg-teal-400/20 text-[#5eead4] border border-teal-500/30 group-hover:border-[#5eead4]/60 flex items-center justify-center shrink-0 transition-colors duration-200 shadow-sm">
-            <i class="fa-solid fa-play text-[11px] md:text-xs pl-0.5 group-hover:scale-110 transition-transform"></i>
+          <div class="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full bg-teal-950/60 group-hover:bg-teal-400/20 text-[#5eead4] border border-teal-500/30 group-hover:border-[#5eead4]/60 flex items-center justify-center shrink-0 transition-colors duration-200 shadow-sm">
+            <i class="fa-solid fa-play text-[10px] sm:text-[11px] md:text-xs pl-0.5 group-hover:scale-110 transition-transform"></i>
           </div>
         `;
 
