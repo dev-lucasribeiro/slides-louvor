@@ -1384,10 +1384,46 @@ window.WORSHIP_THEMES = {
       }
     }
 
+    let projectorCheckInterval = null;
+
+    function updateProjectorButtonState() {
+      if (!btnOpenProjectorWindow) return;
+      const isOpen = projectorWindowRef && !projectorWindowRef.closed;
+      if (isOpen) {
+        btnOpenProjectorWindow.className = "flex items-center space-x-1.5 bg-rose-600 hover:bg-rose-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-md active:scale-95 transition";
+        btnOpenProjectorWindow.innerHTML = `
+          <i class="fa-solid fa-rectangle-xmark text-xs"></i>
+          <span>Fechar Janela Telão</span>
+        `;
+        btnOpenProjectorWindow.title = "Fechar a 2ª tela de projeção";
+      } else {
+        btnOpenProjectorWindow.className = "flex items-center space-x-1.5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-md active:scale-95 transition";
+        btnOpenProjectorWindow.innerHTML = `
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          <span>Abrir Janela Telão</span>
+        `;
+        btnOpenProjectorWindow.title = "Abrir projeção em nova janela para segundo monitor";
+      }
+    }
+
+    function toggleProjectorWindow() {
+      if (projectorWindowRef && !projectorWindowRef.closed) {
+        try {
+          projectorWindowRef.close();
+        } catch (e) {}
+        projectorWindowRef = null;
+        if (projectorCheckInterval) clearInterval(projectorCheckInterval);
+        updateProjectorButtonState();
+        return;
+      }
+      openProjectorWindow();
+    }
+
     function openProjectorWindow() {
       if (projectorWindowRef && !projectorWindowRef.closed) {
         projectorWindowRef.focus();
         dispatchStateToAll();
+        updateProjectorButtonState();
         return;
       }
 
@@ -1399,6 +1435,7 @@ window.WORSHIP_THEMES = {
 
       if (!projectorWindowRef) {
         alert("O navegador bloqueou a abertura do Telão. Permita pop-ups para usar a 2ª tela.");
+        updateProjectorButtonState();
         return;
       }
 
@@ -1543,9 +1580,25 @@ window.WORSHIP_THEMES = {
 </html>`);
       pDoc.close();
       setTimeout(dispatchStateToAll, 200);
+
+      updateProjectorButtonState();
+      if (projectorCheckInterval) clearInterval(projectorCheckInterval);
+      projectorCheckInterval = setInterval(() => {
+        if (!projectorWindowRef || projectorWindowRef.closed) {
+          clearInterval(projectorCheckInterval);
+          projectorWindowRef = null;
+          updateProjectorButtonState();
+        }
+      }, 700);
     }
 
-    btnOpenProjectorWindow.addEventListener("click", openProjectorWindow);
+    btnOpenProjectorWindow.addEventListener("click", toggleProjectorWindow);
+
+    window.addEventListener("beforeunload", () => {
+      if (projectorWindowRef && !projectorWindowRef.closed) {
+        try { projectorWindowRef.close(); } catch (e) {}
+      }
+    });
 
     /* =========================================================================
        NAVEGAÇÃO
@@ -1557,8 +1610,11 @@ window.WORSHIP_THEMES = {
         updatePresentationUI();
         dispatchStateToAll();
       } else {
-        // Ao finalizar o último slide, retorna de forma natural ao Catálogo de Louvores
-        setAppMode("catalog");
+        // No Modo Apresentação (1 tela / palco), retorna ao Catálogo para escolher o próximo louvor.
+        // No Modo Estúdio, o operador permanece na mesa de controle sem interrupção.
+        if (currentAppMode === "presentation") {
+          setAppMode("catalog");
+        }
       }
     }
 
