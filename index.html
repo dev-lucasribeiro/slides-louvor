@@ -1246,7 +1246,7 @@ window.WORSHIP_THEMES = {
         else if (next.type === 'blank') presNextHintText.textContent = `[Instrumental]`;
         else presNextHintText.textContent = next.content.replace(/\n/g, ' ').substring(0, 32) + '...';
       } else {
-        presNextHintText.textContent = "(Fim da música)";
+        presNextHintText.textContent = "Voltar ao Catálogo (Fim)";
       }
 
       if (isBlackout) {
@@ -1551,10 +1551,8 @@ window.WORSHIP_THEMES = {
         updatePresentationUI();
         dispatchStateToAll();
       } else {
-        const curIdx = repertoire.findIndex(s => s.id === activeSongId);
-        if (curIdx >= 0 && curIdx < repertoire.length - 1) {
-          selectSong(repertoire[curIdx + 1].id);
-        }
+        // Ao finalizar o último slide, retorna de forma natural ao Catálogo de Louvores
+        setAppMode("catalog");
       }
     }
 
@@ -1564,15 +1562,6 @@ window.WORSHIP_THEMES = {
         updateStudioMonitors();
         updatePresentationUI();
         dispatchStateToAll();
-      } else {
-        const curIdx = repertoire.findIndex(s => s.id === activeSongId);
-        if (curIdx > 0) {
-          selectSong(repertoire[curIdx - 1].id);
-          currentSlideIndex = structuredSlides.length - 1;
-          updateStudioMonitors();
-          updatePresentationUI();
-          dispatchStateToAll();
-        }
       }
     }
 
