@@ -79,13 +79,13 @@
     .hud-idle:hover { opacity: 1; }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.4); }
-    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.35); border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.6); }
+    ::-webkit-scrollbar-track { background: rgba(3, 20, 27, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(45, 212, 191, 0.2); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(94, 234, 212, 0.45); }
   </style>
 </head>
 
-<body class="h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
+<body class="h-full bg-[#020a0e] text-[#ccfbf1] flex flex-col overflow-hidden">
 
     <!-- 0. PÁGINA INICIAL: SELEÇÃO DE MÚSICA / CATÁLOGO (ESTILO ÁGUAS VIVAS & MERRIWEATHER) -->
   <div id="catalogLayout" class="flex-1 flex flex-col h-full relative overflow-hidden select-none" style="background: radial-gradient(circle at 50% 25%, #06232d 0%, #03141b 55%, #020a0e 100%); color: #ccfbf1;">
@@ -168,65 +168,65 @@
   </div>
 <!-- 1. MODO ESTÚDIO (OPERADOR) -->
   <div id="studioLayout" class="flex-1 flex flex-col overflow-hidden h-full">
-    <header class="bg-slate-900 border-b border-slate-800 px-3 md:px-4 py-2 flex items-center justify-between shrink-0 z-20 shadow-md">
+    <header class="bg-[#03141b] border-b border-teal-900/50 px-3 md:px-4 py-2 flex items-center justify-between shrink-0 z-20 shadow-md">
       <div class="flex items-center space-x-3">
-        <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-md">
-          <i class="fa-solid fa-hands-praying text-white text-sm"></i>
+        <div class="h-9 w-9 rounded-xl bg-teal-900/80 border border-teal-500/30 flex items-center justify-center text-[#5eead4] shadow-md">
+          <i class="fa-solid fa-hands-praying text-sm"></i>
         </div>
         <div>
-          <h1 class="font-outfit font-extrabold text-sm md:text-base tracking-wide flex items-center gap-2">
+          <h1 class="font-serif-classic font-bold text-sm md:text-base tracking-wide flex items-center gap-2 text-[#ccfbf1]">
             LyricSlide Studio
-            <span id="systemModeBadge" class="text-[10px] font-semibold uppercase bg-indigo-950/90 text-indigo-300 border border-indigo-700/50 px-2 py-0.5 rounded-full">
+            <span id="systemModeBadge" class="text-[10px] font-semibold uppercase bg-teal-950/90 text-teal-300 border border-teal-700/50 px-2 py-0.5 rounded-full font-mono">
               Janela Telão (1 ou 2 Telas)
             </span>
           </h1>
-          <div class="flex items-center gap-2 text-xs text-slate-400">
-            <span id="activeSongDisplayTitle" class="font-medium text-slate-200 truncate max-w-[200px] md:max-w-[280px]">Carregando...</span>
-            <span id="activeSongToneBadge" class="hidden text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-amber-300 font-mono"></span>
+          <div class="flex items-center gap-2 text-xs text-teal-300/70">
+            <span id="activeSongDisplayTitle" class="font-medium text-[#ccfbf1] truncate max-w-[200px] md:max-w-[280px]">Carregando...</span>
+            <span id="activeSongToneBadge" class="hidden text-[10px] bg-teal-950 px-1.5 py-0.5 rounded text-amber-300 font-mono border border-teal-800"></span>
           </div>
         </div>
       </div>
 
-      <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
-        <button id="modeBtnCatalog" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition text-slate-400 hover:text-white" title="Voltar para o catálogo de músicas">
-          <i class="fa-solid fa-list-ul text-xs text-indigo-400"></i>
+      <div class="flex items-center bg-[#020a0e] p-1 rounded-xl border border-teal-900/50 text-xs">
+        <button id="modeBtnCatalog" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition text-teal-300/70 hover:text-white" title="Voltar para o catálogo de músicas">
+          <i class="fa-solid fa-list-ul text-xs text-[#5eead4]"></i>
           <span class="hidden sm:inline">Músicas</span>
         </button>
-        <button id="modeBtnWindow" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition bg-indigo-600 text-white shadow-sm">
+        <button id="modeBtnWindow" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-semibold transition bg-teal-600 text-white shadow-sm">
           <i class="fa-solid fa-sliders text-xs"></i>
           <span class="hidden sm:inline">Estúdio</span>
         </button>
 
-        <button id="modeBtnPresentation" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition text-emerald-400 hover:text-emerald-300 hover:bg-slate-900" title="Projeção limpa de alta performance para 1 monitor">
+        <button id="modeBtnPresentation" class="flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition text-emerald-400 hover:text-emerald-300 hover:bg-[#06232d]" title="Projeção limpa de alta performance para 1 monitor">
           <i class="fa-solid fa-play text-xs"></i>
           <span class="font-semibold">Modo 1 Tela (Palco)</span>
         </button>
       </div>
 
       <div class="flex items-center space-x-2">
-        <button id="btnLinkFile" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition">
-          <i class="fa-solid fa-folder-open text-indigo-400 text-xs"></i>
+        <button id="btnLinkFile" class="flex items-center space-x-1.5 bg-[#082a35] hover:bg-[#0c3947] text-teal-100 border border-teal-800/60 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition">
+          <i class="fa-solid fa-folder-open text-[#5eead4] text-xs"></i>
           <span class="hidden md:inline">Vincular</span>
         </button>
 
-        <button id="btnSaveDirectFile" class="flex items-center space-x-1.5 bg-indigo-600 hover:bg-indigo-500 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold transition shadow-sm">
+        <button id="btnSaveDirectFile" class="flex items-center space-x-1.5 bg-teal-600 hover:bg-teal-500 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold transition shadow-sm">
           <i class="fa-solid fa-floppy-disk text-xs"></i>
           <span class="hidden md:inline">Gravar</span>
         </button>
 
-        <div class="h-4 w-[1px] bg-slate-800 hidden sm:block"></div>
+        <div class="h-4 w-[1px] bg-teal-900/60 hidden sm:block"></div>
 
         <button id="btnOpenProjectorWindow" class="flex items-center space-x-1.5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-md active:scale-95 transition">
           <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
           <span>Abrir Janela Telão</span>
         </button>
 
-        <button id="btnBlackout" title="Atalho: B" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium transition">
+        <button id="btnBlackout" title="Atalho: B" class="flex items-center space-x-1.5 bg-[#082a35] hover:bg-[#0c3947] active:scale-95 text-teal-100 border border-teal-800/60 px-3 py-1.5 rounded-lg text-xs font-medium transition">
           <span class="w-2 h-2 rounded-full bg-rose-500" id="blackoutDot"></span>
           <span id="blackoutLabel">Blackout [B]</span>
         </button>
 
-        <button id="btnClearText" title="Atalho: C" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium transition">
+        <button id="btnClearText" title="Atalho: C" class="flex items-center space-x-1.5 bg-[#082a35] hover:bg-[#0c3947] active:scale-95 text-teal-100 border border-teal-800/60 px-3 py-1.5 rounded-lg text-xs font-medium transition">
           <i class="fa-regular fa-eye-slash text-amber-400 text-xs"></i>
           <span id="clearTextLabel">Limpar [C]</span>
         </button>
@@ -235,37 +235,37 @@
 
     <main class="flex-1 flex overflow-hidden relative">
       <!-- PAINEL ESQUERDO: Coletânea -->
-      <aside class="w-64 lg:w-72 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
-        <div class="p-3 border-b border-slate-800 bg-slate-900/80 space-y-2">
+      <aside class="w-64 lg:w-72 bg-[#03141b] border-r border-teal-900/50 flex flex-col shrink-0">
+        <div class="p-3 border-b border-teal-900/50 bg-[#03141b]/90 space-y-2">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1.5">
-              <i class="fa-solid fa-book-bible text-indigo-400 text-xs"></i>
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Repertório</span>
-              <span id="repertoireCountBadge" class="text-[10px] font-bold bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded-full">0</span>
+              <i class="fa-solid fa-book-bible text-[#5eead4] text-xs"></i>
+              <span class="text-xs font-bold uppercase tracking-wider text-teal-200/90 font-serif-classic">Repertório</span>
+              <span id="repertoireCountBadge" class="text-[10px] font-bold bg-teal-950 border border-teal-800/50 text-[#5eead4] px-1.5 py-0.5 rounded-full font-mono">0</span>
             </div>
 
-            <button id="btnNewSong" class="flex items-center space-x-1 text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-2 py-1 rounded-md transition shadow">
+            <button id="btnNewSong" class="flex items-center space-x-1 text-xs bg-teal-600 hover:bg-teal-500 text-white font-semibold px-2 py-1 rounded-md transition shadow">
               <i class="fa-solid fa-plus text-[10px]"></i>
               <span>Novo</span>
             </button>
           </div>
 
           <div class="relative">
-            <input type="text" id="searchSongInput" placeholder="Buscar título ou letra..." class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-3 py-1 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
-            <i class="fa-solid fa-magnifying-glass text-slate-500 absolute left-2.5 top-2 text-[10px]"></i>
+            <input type="text" id="searchSongInput" placeholder="Buscar título ou letra..." class="w-full bg-[#020a0e] border border-teal-800/50 rounded-lg pl-7 pr-3 py-1 text-xs text-[#ccfbf1] placeholder-teal-400/40 focus:outline-none focus:border-[#5eead4]">
+            <i class="fa-solid fa-magnifying-glass text-[#5eead4]/70 absolute left-2.5 top-2 text-[10px]"></i>
           </div>
         </div>
 
         <div id="repertoireList" class="flex-1 overflow-y-auto p-2 space-y-1"></div>
 
-        <div class="p-2.5 border-t border-slate-800 bg-slate-950/60 flex items-center justify-between text-[11px]">
-          <button id="btnExportAll" class="text-slate-400 hover:text-white flex items-center gap-1" title="Exportar repertório atual em JSON">
-            <i class="fa-solid fa-download text-indigo-400"></i> Exportar
+        <div class="p-2.5 border-t border-teal-900/50 bg-[#020a0e]/60 flex items-center justify-between text-[11px]">
+          <button id="btnExportAll" class="text-teal-300/70 hover:text-white flex items-center gap-1 transition" title="Exportar repertório atual em JSON">
+            <i class="fa-solid fa-download text-[#5eead4]"></i> Exportar
           </button>
-          <button id="btnResetDefault" class="text-slate-400 hover:text-amber-300 flex items-center gap-1 transition" title="Restaurar a coletânea padrão original (11 canções)">
+          <button id="btnResetDefault" class="text-teal-300/70 hover:text-amber-300 flex items-center gap-1 transition" title="Restaurar a coletânea padrão original (11 canções)">
             <i class="fa-solid fa-rotate-left text-amber-400"></i> Padrão
           </button>
-          <label class="text-slate-400 hover:text-white flex items-center gap-1 cursor-pointer" title="Importar arquivo JSON de músicas">
+          <label class="text-teal-300/70 hover:text-white flex items-center gap-1 cursor-pointer transition" title="Importar arquivo JSON de músicas">
             <i class="fa-solid fa-upload text-emerald-400"></i> Importar
             <input type="file" id="fileImportInput" accept=".json,.txt" class="hidden">
           </label>
@@ -273,9 +273,9 @@
       </aside>
 
       <!-- PAINEL CENTRAL: Editor -->
-      <div id="editorDrawer" class="w-72 lg:w-80 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
-        <div class="p-3 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Configuração da Canção</span>
+      <div id="editorDrawer" class="w-72 lg:w-80 bg-[#041c25] border-r border-teal-900/50 flex flex-col shrink-0">
+        <div class="p-3 border-b border-teal-900/50 bg-[#03141b]/80 flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider text-teal-200/90 font-serif-classic">Configuração da Canção</span>
           <button id="btnSaveSong" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded-md transition shadow flex items-center space-x-1">
             <i class="fa-solid fa-check text-[10px]"></i>
             <span>Salvar</span>
@@ -285,35 +285,35 @@
         <div class="flex-1 p-3 space-y-3 overflow-y-auto">
           <div class="grid grid-cols-3 gap-2">
             <div class="col-span-2">
-              <label class="block text-[11px] font-medium text-slate-400 mb-1">Título</label>
-              <input type="text" id="editTitle" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+              <label class="block text-[11px] font-medium text-teal-300/80 mb-1">Título</label>
+              <input type="text" id="editTitle" class="w-full bg-[#020a0e] border border-teal-800/50 rounded-lg px-2.5 py-1.5 text-xs text-[#ccfbf1] placeholder-teal-400/40 focus:outline-none focus:border-[#5eead4]">
             </div>
             <div>
-              <label class="block text-[11px] font-medium text-slate-400 mb-1">Tom</label>
-              <input type="text" id="editTone" placeholder="ex: D" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+              <label class="block text-[11px] font-medium text-teal-300/80 mb-1">Tom</label>
+              <input type="text" id="editTone" placeholder="ex: D" class="w-full bg-[#020a0e] border border-teal-800/50 rounded-lg px-2.5 py-1.5 text-xs text-[#ccfbf1] placeholder-teal-400/40 focus:outline-none focus:border-[#5eead4]">
             </div>
           </div>
 
           <div class="flex flex-col h-40">
             <div class="flex items-center justify-between mb-1">
-              <label class="block text-[11px] font-medium text-slate-400">Letra</label>
-              <span class="text-[10px] text-indigo-400 font-mono">2x Enter = Novo Slide</span>
+              <label class="block text-[11px] font-medium text-teal-300/80">Letra</label>
+              <span class="text-[10px] text-[#5eead4] font-mono">2x Enter = Novo Slide</span>
             </div>
-            <textarea id="editLyrics" class="flex-1 w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none leading-relaxed"></textarea>
+            <textarea id="editLyrics" class="flex-1 w-full bg-[#020a0e] border border-teal-800/50 rounded-lg p-2 text-xs font-mono text-teal-100 placeholder-teal-500/40 focus:outline-none focus:border-[#5eead4] resize-none leading-relaxed"></textarea>
           </div>
 
-          <div class="pt-2 border-t border-slate-800 space-y-2.5">
-            <span class="text-[11px] font-bold text-indigo-400 uppercase tracking-wider block">Tema e Cenário Sagrado</span>
+          <div class="pt-2 border-t border-teal-900/50 space-y-2.5">
+            <span class="text-[11px] font-bold text-[#5eead4] uppercase tracking-wider block font-serif-classic">Tema e Cenário Sagrado</span>
 
             <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Cenário SVG & Cores da Letra (de temas.js)</label>
+              <label class="block text-[11px] text-teal-300/80 mb-1">Cenário SVG & Cores da Letra (de temas.js)</label>
               <!-- Preenchido Dinamicamente via JavaScript -->
-              <select id="editTheme" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"></select>
+              <select id="editTheme" class="w-full bg-[#020a0e] border border-teal-800/50 rounded-lg px-2 py-1.5 text-xs text-[#ccfbf1] focus:outline-none focus:border-[#5eead4]"></select>
             </div>
 
             <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Fonte da Canção</label>
-              <select id="editFontFamily" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+              <label class="block text-[11px] text-teal-300/80 mb-1">Fonte da Canção</label>
+              <select id="editFontFamily" class="w-full bg-[#020a0e] border border-teal-800/50 rounded-lg px-2 py-1.5 text-xs text-[#ccfbf1] focus:outline-none focus:border-[#5eead4]">
                 <option value="font-outfit">Outfit (Moderna & Legível)</option>
                 <option value="font-cinzel">Cinzel (Solene / Sacra)</option>
                 <option value="font-serif-classic">Merriweather (Hinário Tradicional)</option>
@@ -322,32 +322,32 @@
             </div>
 
             <div>
-              <div class="flex justify-between text-xs text-slate-400 mb-1">
+              <div class="flex justify-between text-xs text-teal-300/80 mb-1">
                 <span>Tamanho da Letra</span>
-                <span id="labelFontSize" class="font-mono text-indigo-400 text-xs">3.8rem</span>
+                <span id="labelFontSize" class="font-mono text-[#5eead4] text-xs">3.8rem</span>
               </div>
-              <input type="range" id="editFontSize" min="2.2" max="5.6" step="0.1" value="3.8" class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+              <input type="range" id="editFontSize" min="2.2" max="5.6" step="0.1" value="3.8" class="w-full h-1.5 bg-teal-950 rounded-lg appearance-none cursor-pointer accent-[#5eead4]">
             </div>
 
             <div class="grid grid-cols-2 gap-2">
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1">Alinhamento</label>
-                <div class="flex bg-slate-950 p-1 rounded-lg border border-slate-700">
-                  <button type="button" data-align="text-center" class="btn-align-opt flex-1 py-1 rounded text-xs text-center transition bg-indigo-600 text-white font-medium">Centro</button>
-                  <button type="button" data-align="text-left" class="btn-align-opt flex-1 py-1 rounded text-xs text-center transition text-slate-400 hover:text-white">Esq</button>
+                <label class="block text-[11px] text-teal-300/80 mb-1">Alinhamento</label>
+                <div class="flex bg-[#020a0e] p-1 rounded-lg border border-teal-800/50">
+                  <button type="button" data-align="text-center" class="btn-align-opt flex-1 py-1 rounded text-xs text-center transition bg-teal-600 text-white font-medium">Centro</button>
+                  <button type="button" data-align="text-left" class="btn-align-opt flex-1 py-1 rounded text-xs text-center transition text-teal-300/70 hover:text-white">Esq</button>
                 </div>
               </div>
 
               <div>
-                <label class="block text-[11px] text-slate-400 mb-1">Caixa Alta</label>
-                <button type="button" id="btnToggleUppercase" class="w-full py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs font-semibold text-slate-300 transition">
+                <label class="block text-[11px] text-teal-300/80 mb-1">Caixa Alta</label>
+                <button type="button" id="btnToggleUppercase" class="w-full py-1.5 bg-[#020a0e] border border-teal-800/50 rounded-lg text-xs font-semibold text-teal-200 hover:border-teal-400/60 transition">
                   MAIÚSCULO
                 </button>
               </div>
             </div>
 
             <div class="pt-2 flex justify-between items-center text-xs">
-              <button id="btnDuplicateSong" class="text-slate-400 hover:text-white underline">Duplicar</button>
+              <button id="btnDuplicateSong" class="text-teal-300/70 hover:text-white underline">Duplicar</button>
               <button id="btnDeleteSong" class="text-rose-400 hover:text-rose-300">Excluir Música</button>
             </div>
           </div>
@@ -355,18 +355,18 @@
       </div>
 
       <!-- PAINEL DIREITO: Monitores e Timeline -->
-      <section class="flex-1 flex flex-col bg-slate-950 overflow-hidden">
+      <section class="flex-1 flex flex-col bg-[#020a0e] overflow-hidden">
         <div class="flex-1 p-3 md:p-4 grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 overflow-hidden">
           
           <!-- MONITOR 1: AO VIVO -->
-          <div class="flex flex-col rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden shadow-xl">
-            <div class="px-3 py-2 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex flex-col rounded-xl border border-teal-900/50 bg-[#03141b]/70 overflow-hidden shadow-xl">
+            <div class="px-3 py-2 bg-[#03141b] border-b border-teal-900/50 flex items-center justify-between">
               <div class="flex items-center space-x-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
-                <span class="text-xs font-bold uppercase tracking-wider text-rose-300">Ao Vivo no Telão</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-rose-300 font-serif-classic">Ao Vivo no Telão</span>
               </div>
-              <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-                <span id="previewSlideTypeTag" class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-950 border border-indigo-800 text-indigo-300 font-sans">Slide</span>
+              <div class="flex items-center gap-2 text-xs font-mono text-teal-300/70">
+                <span id="previewSlideTypeTag" class="text-[10px] px-1.5 py-0.5 rounded bg-teal-950 border border-teal-800/60 text-[#5eead4] font-sans">Slide</span>
                 <span><span id="previewCurrentNum" class="text-white font-bold">1</span>/<span id="previewTotalNum" class="text-white">1</span></span>
               </div>
             </div>
@@ -385,31 +385,31 @@
           </div>
 
           <!-- MONITOR 2: PRÓXIMO SLIDE -->
-          <div class="flex flex-col rounded-xl border border-slate-800 bg-slate-900/40 overflow-hidden">
-            <div class="px-3 py-2 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex flex-col rounded-xl border border-teal-900/50 bg-[#03141b]/40 overflow-hidden">
+            <div class="px-3 py-2 bg-[#03141b]/80 border-b border-teal-900/50 flex items-center justify-between">
               <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-forward text-slate-400 text-xs"></i>
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">A Seguir (Preview)</span>
+                <i class="fa-solid fa-forward text-teal-300/70 text-xs"></i>
+                <span class="text-xs font-bold uppercase tracking-wider text-teal-300/70 font-serif-classic">A Seguir (Preview)</span>
               </div>
-              <span id="previewNextBadge" class="text-[11px] font-mono text-slate-400">Slide 2</span>
+              <span id="previewNextBadge" class="text-[11px] font-mono text-teal-300/70">Slide 2</span>
             </div>
 
-            <div class="flex-1 bg-slate-950/60 flex items-center justify-center p-6 relative overflow-hidden">
-              <div id="studioNextContent" class="text-slate-400 text-center font-medium max-w-md italic">
+            <div class="flex-1 bg-[#020a0e]/60 flex items-center justify-center p-6 relative overflow-hidden">
+              <div id="studioNextContent" class="text-teal-200/70 text-center font-medium max-w-md italic font-serif-classic">
                 (Aguardando...)
               </div>
             </div>
           </div>
         </div>
 
-        <div class="h-32 bg-slate-900 border-t border-slate-800 p-2.5 flex flex-col justify-between shrink-0">
+        <div class="h-32 bg-[#03141b] border-t border-teal-900/50 p-2.5 flex flex-col justify-between shrink-0">
           <div class="flex items-center justify-between mb-1.5 px-1">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sequência da Canção</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-teal-300/70 font-serif-classic">Sequência da Canção</span>
             <div class="flex items-center space-x-2">
-              <button id="btnPrevSlide" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold border border-slate-700 transition">
+              <button id="btnPrevSlide" class="px-3 py-1 bg-[#082a35] hover:bg-[#0c3947] text-teal-100 rounded-lg text-xs font-semibold border border-teal-800/60 transition">
                 <i class="fa-solid fa-chevron-left mr-1"></i> Anterior [←]
               </button>
-              <button id="btnNextSlide" class="px-4 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md transition">
+              <button id="btnNextSlide" class="px-4 py-1 bg-teal-600 hover:bg-teal-500 text-white rounded-lg text-xs font-semibold shadow-md transition">
                 Avançar [Espaço / →] <i class="fa-solid fa-chevron-right ml-1"></i>
               </button>
             </div>
@@ -424,24 +424,24 @@
   <!-- 2. MODO 1 TELA (PROJEÇÃO LIMPA / APRESENTAÇÃO) -->
   <div id="presentationLayout" class="hidden fixed inset-0 z-40 flex flex-col overflow-hidden select-none">
     <header id="presHUD" class="hud-bar absolute top-2 sm:top-3 inset-x-2 sm:inset-x-4 md:inset-x-8 z-50 flex items-center justify-between pointer-events-auto">
-      <div class="flex items-center space-x-1.5 sm:space-x-2 bg-slate-950/80 backdrop-blur-md border border-white/10 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full shadow-2xl">
-        <button id="btnOpenDrawerFromPres" class="flex items-center space-x-1.5 sm:space-x-2 text-[11px] sm:text-xs font-bold text-white hover:text-teal-300 transition" title="Abrir Lista de Músicas [M]">
+      <div class="flex items-center space-x-1.5 sm:space-x-2 bg-[#020a0e]/85 backdrop-blur-md border border-teal-500/20 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full shadow-2xl text-[#ccfbf1]">
+        <button id="btnOpenDrawerFromPres" class="flex items-center space-x-1.5 sm:space-x-2 text-[11px] sm:text-xs font-bold text-[#ccfbf1] hover:text-[#5eead4] transition font-serif-classic" title="Abrir Lista de Músicas [M]">
           <span id="presSongIndexBadge" class="bg-teal-700/80 text-white font-mono text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full">#01</span>
           <span id="presSongTitle" class="truncate max-w-[95px] sm:max-w-[180px] md:max-w-[280px]">Título</span>
-          <i class="fa-solid fa-bars-staggered text-[10px] sm:text-xs text-slate-400"></i>
+          <i class="fa-solid fa-bars-staggered text-[10px] sm:text-xs text-teal-400/60"></i>
         </button>
-        <span id="presSongToneBadge" class="hidden text-[10px] font-mono bg-white/10 px-1.5 py-0.5 rounded text-amber-300"></span>
+        <span id="presSongToneBadge" class="hidden text-[10px] font-mono bg-teal-950/80 px-1.5 py-0.5 rounded text-amber-300 border border-teal-800/50"></span>
       </div>
 
-      <button id="btnOpenSpotlightSearch" class="hidden sm:flex items-center space-x-2.5 bg-slate-950/80 backdrop-blur-md border border-white/10 hover:border-teal-500/50 px-4 py-1.5 rounded-full text-xs text-slate-300 shadow-2xl transition">
-        <i class="fa-solid fa-magnifying-glass text-teal-400 text-xs"></i>
-        <span class="text-slate-400">Busca rápida...</span>
-        <kbd class="bg-white/10 text-[10px] font-mono px-1.5 py-0.5 rounded text-slate-400">Ctrl+K</kbd>
+      <button id="btnOpenSpotlightSearch" class="hidden sm:flex items-center space-x-2.5 bg-[#020a0e]/85 backdrop-blur-md border border-teal-500/20 hover:border-teal-400/50 px-4 py-1.5 rounded-full text-xs text-teal-200 shadow-2xl transition">
+        <i class="fa-solid fa-magnifying-glass text-[#5eead4] text-xs"></i>
+        <span class="text-teal-300/60 font-serif-classic">Busca rápida...</span>
+        <kbd class="bg-teal-950/80 text-[10px] font-mono px-1.5 py-0.5 rounded text-teal-300/70 border border-teal-800/40">Ctrl+K</kbd>
       </button>
 
-      <div class="flex items-center space-x-1 sm:space-x-1.5 bg-slate-950/80 backdrop-blur-md border border-white/10 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-2xl text-[10px] sm:text-xs">
-        <span class="text-[10px] sm:text-[11px] font-mono text-slate-300 mr-0.5 sm:mr-1">
-          <span id="presSlideCur" class="text-white font-bold">1</span>/<span id="presSlideTot" class="text-slate-400">1</span>
+      <div class="flex items-center space-x-1 sm:space-x-1.5 bg-[#020a0e]/85 backdrop-blur-md border border-teal-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-2xl text-[10px] sm:text-xs text-[#ccfbf1]">
+        <span class="text-[10px] sm:text-[11px] font-mono text-teal-300/80 mr-0.5 sm:mr-1">
+          <span id="presSlideCur" class="text-white font-bold">1</span>/<span id="presSlideTot" class="text-teal-400/60">1</span>
         </span>
 
         <button id="presBtnBlackout" title="Blackout [B]" class="p-1 sm:p-1.5 hover:bg-white/10 text-rose-400 rounded-lg transition">
@@ -452,20 +452,20 @@
           <i class="fa-regular fa-eye-slash text-xs"></i>
         </button>
 
-        <button id="presBtnFullscreen" title="Tela Cheia [F]" class="p-1 sm:p-1.5 hover:bg-white/10 text-white rounded-lg transition">
+        <button id="presBtnFullscreen" title="Tela Cheia [F]" class="p-1 sm:p-1.5 hover:bg-white/10 text-[#ccfbf1] rounded-lg transition">
           <i class="fa-solid fa-expand text-xs"></i>
         </button>
 
-        <div class="h-3 w-[1px] bg-white/20 mx-0.5 sm:mx-1"></div>
+        <div class="h-3 w-[1px] bg-teal-500/20 mx-0.5 sm:mx-1"></div>
 
-        <button id="btnReturnToCatalogFromPres" class="flex items-center space-x-1 text-slate-300 hover:text-white font-semibold text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md hover:bg-white/10 transition" title="Voltar ao Catálogo de Músicas [ESC]">
-          <i class="fa-solid fa-list-ul text-[10px] sm:text-xs text-teal-400"></i>
+        <button id="btnReturnToCatalogFromPres" class="flex items-center space-x-1 text-teal-200/90 hover:text-white font-semibold text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md hover:bg-white/10 transition font-serif-classic" title="Voltar ao Catálogo de Músicas [ESC]">
+          <i class="fa-solid fa-list-ul text-[10px] sm:text-xs text-[#5eead4]"></i>
           <span>Músicas</span>
         </button>
 
         <!-- Botão Estúdio desabilitado/oculto em telas mobile -->
-        <button id="btnReturnToStudio" class="hidden md:flex items-center space-x-1 text-slate-300 hover:text-white font-semibold text-[11px] px-2 py-0.5 rounded-md hover:bg-white/10 transition">
-          <i class="fa-solid fa-sliders text-xs text-indigo-400"></i>
+        <button id="btnReturnToStudio" class="hidden md:flex items-center space-x-1 text-teal-200/90 hover:text-white font-semibold text-[11px] px-2 py-0.5 rounded-md hover:bg-white/10 transition font-serif-classic">
+          <i class="fa-solid fa-sliders text-xs text-[#5eead4]"></i>
           <span>Estúdio</span>
         </button>
       </div>
@@ -480,8 +480,8 @@
         <div id="presSlideContent" class="w-full text-center"></div>
       </div>
 
-      <div id="presNextHintPill" class="hidden sm:block absolute bottom-4 right-6 bg-slate-950/60 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-full text-xs text-slate-400 font-medium max-w-xs truncate shadow-lg opacity-40 hover:opacity-100 transition-opacity pointer-events-none z-30">
-        <span class="text-indigo-400 font-bold mr-1">Próx:</span>
+      <div id="presNextHintPill" class="hidden sm:block absolute bottom-4 right-6 bg-[#020a0e]/85 backdrop-blur-md border border-teal-500/20 px-3.5 py-1.5 rounded-full text-xs text-teal-300/70 font-medium max-w-xs truncate shadow-lg opacity-40 hover:opacity-100 transition-opacity pointer-events-none z-30">
+        <span class="text-[#5eead4] font-bold mr-1">Próx:</span>
         <span id="presNextHintText">...</span>
       </div>
 
@@ -503,26 +503,26 @@
   </div>
 
   <!-- 3. GAVETA LATERAL [M] -->
-  <div id="drawerNumberedSongs" class="fixed inset-y-0 left-0 w-[88vw] max-w-sm bg-slate-950/95 backdrop-blur-xl border-r border-slate-800 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
-    <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-      <div class="flex items-center space-x-2">
-        <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs font-bold">
+  <div id="drawerNumberedSongs" class="fixed inset-y-0 left-0 w-[88vw] max-w-sm bg-[#03141b]/95 backdrop-blur-xl border-r border-teal-800/50 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl text-[#ccfbf1]">
+    <div class="p-4 border-b border-teal-900/60 bg-[#020a0e]/40 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-7 h-7 rounded-lg bg-teal-900/80 border border-teal-500/30 flex items-center justify-center text-[#5eead4] text-xs font-bold">
           <i class="fa-solid fa-list-ol"></i>
         </div>
         <div>
-          <h3 class="text-sm font-bold text-white">Repertório do Culto</h3>
-          <p class="text-[10px] text-slate-400">Pressione 'M' para abrir ou fechar</p>
+          <h3 class="text-sm font-bold text-[#ccfbf1] font-serif-classic">Repertório do Culto</h3>
+          <p class="text-[10px] text-teal-300/60 font-serif-classic">Pressione 'M' para abrir ou fechar</p>
         </div>
       </div>
-      <button id="btnCloseNumberedDrawer" class="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition">
+      <button id="btnCloseNumberedDrawer" class="text-teal-400 hover:text-white p-1.5 rounded-lg hover:bg-teal-950/60 transition">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <div class="p-3 border-b border-slate-800/60">
+    <div class="p-3 border-b border-teal-900/50 bg-[#020a0e]/20">
       <div class="relative">
-        <input type="text" id="drawerSearchInput" placeholder="Filtrar número ou título..." class="w-full bg-slate-900 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
-        <i class="fa-solid fa-magnifying-glass text-slate-500 absolute left-2.5 top-2.5 text-xs"></i>
+        <input type="text" id="drawerSearchInput" placeholder="Filtrar número ou título..." class="w-full bg-[#020a0e] border border-teal-800/50 rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#ccfbf1] placeholder-teal-400/40 focus:outline-none focus:border-[#5eead4]">
+        <i class="fa-solid fa-magnifying-glass text-[#5eead4]/70 absolute left-2.5 top-2.5 text-xs"></i>
       </div>
     </div>
 
@@ -531,12 +531,12 @@
   <div id="drawerBackdrop" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-45 transition-opacity"></div>
 
   <!-- 4. SPOTLIGHT [Ctrl+K ou '/'] -->
-  <div id="modalSpotlightSearch" class="hidden fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-slate-950/80 backdrop-blur-md">
-    <div class="bg-slate-900 border border-slate-700 max-w-xl w-full rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-      <div class="p-3.5 border-b border-slate-800 flex items-center space-x-3 bg-slate-950/60">
-        <i class="fa-solid fa-magnifying-glass text-indigo-400 text-sm"></i>
-        <input type="text" id="spotlightInput" placeholder="Digite o número (ex: 2) ou trecho da música..." class="flex-1 bg-transparent text-white text-sm focus:outline-none placeholder-slate-500" autocomplete="off">
-        <kbd class="text-[10px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">ESC</kbd>
+  <div id="modalSpotlightSearch" class="hidden fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-[#020a0e]/85 backdrop-blur-md">
+    <div class="bg-[#03141b]/95 backdrop-blur-xl border border-teal-500/30 max-w-xl w-full rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden flex flex-col text-[#ccfbf1]">
+      <div class="p-3.5 border-b border-teal-900/60 flex items-center space-x-3 bg-[#020a0e]/60">
+        <i class="fa-solid fa-magnifying-glass text-[#5eead4] text-sm"></i>
+        <input type="text" id="spotlightInput" placeholder="Digite o número (ex: 2) ou trecho da música..." class="flex-1 bg-transparent text-[#ccfbf1] text-sm focus:outline-none placeholder-teal-400/40 font-serif-classic" autocomplete="off">
+        <kbd class="text-[10px] font-mono text-teal-300/70 bg-teal-950/80 px-2 py-0.5 rounded border border-teal-700/40">ESC</kbd>
       </div>
       <div id="spotlightResultsList" class="max-h-80 overflow-y-auto p-2 space-y-1"></div>
     </div>
@@ -1098,14 +1098,14 @@ window.WORSHIP_THEMES = {
       editFontSize.value = song.fontSize || "3.8";
       labelFontSize.textContent = `${editFontSize.value}rem`;
 
-      btnToggleUppercase.classList.toggle("bg-indigo-600", !!song.uppercase);
+      btnToggleUppercase.classList.toggle("bg-teal-600", !!song.uppercase);
       btnToggleUppercase.classList.toggle("text-white", !!song.uppercase);
 
       alignButtons.forEach(btn => {
         const matches = btn.dataset.align === (song.align || "text-center");
-        btn.classList.toggle("bg-indigo-600", matches);
+        btn.classList.toggle("bg-teal-600", matches);
         btn.classList.toggle("text-white", matches);
-        btn.classList.toggle("text-slate-400", !matches);
+        btn.classList.toggle("text-teal-300/70", !matches);
       });
 
       activeSongDisplayTitle.textContent = song.title || "Sem Título";
@@ -1277,30 +1277,30 @@ window.WORSHIP_THEMES = {
         card.type = "button";
         card.className = `flex-shrink-0 w-36 h-20 rounded-xl p-2 text-left text-[11px] overflow-hidden border transition-all flex flex-col justify-between ${
           idx === currentSlideIndex 
-            ? "border-indigo-500 bg-indigo-950/80 ring-2 ring-indigo-500/50 text-white font-semibold scale-105 shadow-md"
-            : "border-slate-800 bg-slate-950/70 hover:border-slate-700 text-slate-400"
+            ? "border-[#5eead4] bg-[#0c3947] ring-2 ring-teal-400/50 text-white font-semibold scale-105 shadow-[0_4px_16px_rgba(45,212,191,0.25)]"
+            : "border-teal-900/60 bg-[#03141b]/90 hover:border-teal-700/60 text-teal-300/70"
         }`;
         card.dataset.index = idx;
 
         let previewText = "";
-        let badgeColor = "text-indigo-300";
+        let badgeColor = "text-[#5eead4]";
 
         if (slide.type === 'title') {
           previewText = slide.title;
-          badgeColor = "text-amber-400";
+          badgeColor = "text-amber-300";
         } else if (slide.type === 'blank') {
           previewText = "✨ Fundo Instrumental";
-          badgeColor = "text-emerald-400";
+          badgeColor = "text-emerald-300";
         } else {
           previewText = slide.content;
         }
 
         card.innerHTML = `
           <div class="flex items-center justify-between text-[10px]">
-            <span class="font-bold ${badgeColor} truncate max-w-[90px]">${slide.label}</span>
-            <span class="text-slate-500 font-mono">#${idx + 1}</span>
+            <span class="font-bold ${badgeColor} truncate max-w-[90px] font-serif-classic">${slide.label}</span>
+            <span class="text-teal-400/50 font-mono">#${idx + 1}</span>
           </div>
-          <div class="line-clamp-2 leading-tight text-[11px] text-slate-300">${previewText}</div>
+          <div class="line-clamp-2 leading-tight text-[11px] text-[#ccfbf1] font-serif-classic">${previewText}</div>
         `;
 
         card.addEventListener("click", () => {
@@ -1319,9 +1319,9 @@ window.WORSHIP_THEMES = {
       const cards = slideThumbnailsBar.querySelectorAll("button");
       cards.forEach((card, idx) => {
         if (idx === currentSlideIndex) {
-          card.className = "flex-shrink-0 w-36 h-20 rounded-xl p-2 text-left text-[11px] overflow-hidden border transition-all flex flex-col justify-between border-indigo-500 bg-indigo-950/80 ring-2 ring-indigo-500/50 text-white font-semibold scale-105 shadow-md";
+          card.className = "flex-shrink-0 w-36 h-20 rounded-xl p-2 text-left text-[11px] overflow-hidden border transition-all flex flex-col justify-between border-[#5eead4] bg-[#0c3947] ring-2 ring-teal-400/50 text-white font-semibold scale-105 shadow-[0_4px_16px_rgba(45,212,191,0.25)]";
         } else {
-          card.className = "flex-shrink-0 w-36 h-20 rounded-xl p-2 text-left text-[11px] overflow-hidden border transition-all flex flex-col justify-between border-slate-800 bg-slate-950/70 hover:border-slate-700 text-slate-400";
+          card.className = "flex-shrink-0 w-36 h-20 rounded-xl p-2 text-left text-[11px] overflow-hidden border transition-all flex flex-col justify-between border-teal-900/60 bg-[#03141b]/90 hover:border-teal-700/60 text-teal-300/70";
         }
       });
       scrollThumbnailIntoView();
@@ -1616,14 +1616,14 @@ window.WORSHIP_THEMES = {
       if (presentationLayout) presentationLayout.classList.toggle("hidden", mode !== "presentation");
 
       if (modeBtnCatalog) {
-        modeBtnCatalog.classList.toggle("bg-indigo-600", mode === "catalog");
+        modeBtnCatalog.classList.toggle("bg-teal-600", mode === "catalog");
         modeBtnCatalog.classList.toggle("text-white", mode === "catalog");
-        modeBtnCatalog.classList.toggle("text-slate-400", mode !== "catalog");
+        modeBtnCatalog.classList.toggle("text-teal-300/70", mode !== "catalog");
       }
       if (modeBtnWindow) {
-        modeBtnWindow.classList.toggle("bg-indigo-600", mode === "window" || mode === "studio");
+        modeBtnWindow.classList.toggle("bg-teal-600", mode === "window" || mode === "studio");
         modeBtnWindow.classList.toggle("text-white", mode === "window" || mode === "studio");
-        modeBtnWindow.classList.toggle("text-slate-400", mode !== "window" && mode !== "studio");
+        modeBtnWindow.classList.toggle("text-teal-300/70", mode !== "window" && mode !== "studio");
       }
 
       if (mode === "catalog") {
@@ -1731,19 +1731,19 @@ window.WORSHIP_THEMES = {
         item.type = "button";
         item.className = `w-full text-left p-2.5 rounded-xl border flex items-center justify-between transition group ${
           isActive 
-            ? "bg-indigo-600 border-indigo-400 text-white shadow-md font-semibold"
-            : "bg-slate-900/60 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
+            ? "bg-teal-700/90 border-teal-400 text-white shadow-md font-semibold"
+            : "bg-[#06232d]/60 border-teal-900/50 text-teal-100 hover:bg-[#0c3947] hover:border-teal-700/60 hover:text-white"
         }`;
 
         item.innerHTML = `
           <div class="flex items-center space-x-3 overflow-hidden">
-            <span class="font-mono text-xs font-bold px-2 py-1 rounded ${isActive ? 'bg-white/20 text-white' : 'bg-slate-800 text-indigo-400 border border-slate-700'}">[${numStr}]</span>
+            <span class="font-mono text-xs font-bold px-2 py-1 rounded ${isActive ? 'bg-white/20 text-white' : 'bg-teal-950 text-[#5eead4] border border-teal-800/60'}">[${numStr}]</span>
             <div class="truncate">
-              <div class="text-xs truncate font-medium">${song.title}</div>
-              <div class="text-[10px] text-slate-400 truncate opacity-70">${(song.lyrics || "").substring(0, 32)}...</div>
+              <div class="text-xs truncate font-medium font-serif-classic">${song.title}</div>
+              <div class="text-[10px] text-teal-300/60 truncate font-serif-classic">${(song.lyrics || "").substring(0, 32)}...</div>
             </div>
           </div>
-          ${song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'bg-white/20' : 'bg-slate-800 border border-slate-700 text-slate-400'}">${song.tone}</span>` : ''}
+          ${song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${isActive ? 'bg-white/20' : 'bg-teal-950 border border-teal-800 text-amber-300'}">${song.tone}</span>` : ''}
         `;
 
         item.addEventListener("click", () => {
@@ -1788,7 +1788,7 @@ window.WORSHIP_THEMES = {
       });
 
       if (results.length === 0) {
-        spotlightResultsList.innerHTML = `<div class="p-6 text-center text-xs text-slate-500">Nenhuma canção encontrada para "${q}"</div>`;
+        spotlightResultsList.innerHTML = `<div class="p-6 text-center text-xs text-teal-300/60 font-serif-classic">Nenhuma canção encontrada para "${q}"</div>`;
         return;
       }
 
@@ -1797,16 +1797,18 @@ window.WORSHIP_THEMES = {
       results.forEach((item, rIdx) => {
         const isSelected = rIdx === spotlightSelectedIndex;
         const row = document.createElement("div");
-        row.className = `p-2.5 rounded-xl cursor-pointer flex items-center justify-between transition ${
-          isSelected ? "bg-indigo-600 text-white font-semibold shadow-md" : "hover:bg-slate-800 text-slate-300"
+        row.className = `p-2.5 rounded-xl cursor-pointer flex items-center justify-between transition border ${
+          isSelected 
+            ? "bg-teal-700/90 border-teal-400/70 text-white font-semibold shadow-md" 
+            : "border-transparent hover:bg-[#0c3947] text-teal-100"
         }`;
 
         row.innerHTML = `
           <div class="flex items-center space-x-3 overflow-hidden">
-            <span class="font-mono text-xs px-2 py-0.5 rounded font-bold ${isSelected ? 'bg-white/20 text-white' : 'bg-slate-800 text-indigo-400 border border-slate-700'}">[${item.numStr}]</span>
-            <span class="text-xs truncate font-medium">${item.song.title}</span>
+            <span class="font-mono text-xs px-2 py-0.5 rounded font-bold ${isSelected ? 'bg-white/20 text-white' : 'bg-teal-950 text-[#5eead4] border border-teal-800/60'}">[${item.numStr}]</span>
+            <span class="text-xs truncate font-medium font-serif-classic">${item.song.title}</span>
           </div>
-          ${item.song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${isSelected ? 'bg-white/20' : 'bg-slate-800 border border-slate-700 text-slate-400'}">${item.song.tone}</span>` : ''}
+          ${item.song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${isSelected ? 'bg-white/20' : 'bg-teal-950 border border-teal-800 text-amber-300'}">${item.song.tone}</span>` : ''}
         `;
 
         row.addEventListener("click", () => {
@@ -2013,19 +2015,19 @@ window.WORSHIP_THEMES = {
         const item = document.createElement("div");
         item.className = `p-2.5 rounded-xl border cursor-pointer transition flex items-center justify-between group ${
           isActive 
-            ? "bg-indigo-950/60 border-indigo-500/70 text-white shadow-sm" 
-            : "bg-slate-950/40 hover:bg-slate-800/60 border-slate-800 text-slate-300"
+            ? "bg-[#082a35] border-teal-400/60 text-white shadow-[0_0_12px_rgba(45,212,191,0.15)]" 
+            : "bg-[#020a0e]/40 hover:bg-[#082a35]/60 border-teal-950/60 text-teal-200/80"
         }`;
 
         item.innerHTML = `
           <div class="flex items-center space-x-2.5 overflow-hidden">
-            <span class="font-mono text-[11px] font-bold text-slate-500">[${numStr}]</span>
+            <span class="font-mono text-[11px] font-bold ${isActive ? 'text-[#5eead4]' : 'text-teal-400/50'}">[${numStr}]</span>
             <div class="overflow-hidden">
-              <div class="text-xs font-semibold truncate ${isActive ? 'text-indigo-200' : 'text-slate-200'}">${song.title || "Sem título"}</div>
-              <div class="text-[10px] text-slate-500 truncate">${(song.lyrics || "").substring(0, 28)}...</div>
+              <div class="text-xs font-semibold truncate font-serif-classic ${isActive ? 'text-[#5eead4]' : 'text-[#ccfbf1]'}">${song.title || "Sem título"}</div>
+              <div class="text-[10px] ${isActive ? 'text-teal-200/70' : 'text-teal-400/40'} truncate font-serif-classic">${(song.lyrics || "").substring(0, 28)}...</div>
             </div>
           </div>
-          ${song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">${song.tone}</span>` : ''}
+          ${song.tone ? `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-teal-950 border border-teal-800/60 text-amber-300">${song.tone}</span>` : ''}
         `;
 
         item.addEventListener("click", () => {
@@ -2094,11 +2096,11 @@ window.WORSHIP_THEMES = {
     alignButtons.forEach(btn => {
       btn.addEventListener("click", () => {
         alignButtons.forEach(b => {
-          b.classList.remove("bg-indigo-600", "text-white");
-          b.classList.add("text-slate-400");
+          b.classList.remove("bg-teal-600", "text-white");
+          b.classList.add("text-teal-300/70");
         });
-        btn.classList.add("bg-indigo-600", "text-white");
-        btn.classList.remove("text-slate-400");
+        btn.classList.add("bg-teal-600", "text-white");
+        btn.classList.remove("text-teal-300/70");
 
         const song = getActiveSong();
         if (song) {
@@ -2115,7 +2117,7 @@ window.WORSHIP_THEMES = {
       const song = getActiveSong();
       if (song) {
         song.uppercase = !song.uppercase;
-        btnToggleUppercase.classList.toggle("bg-indigo-600", song.uppercase);
+        btnToggleUppercase.classList.toggle("bg-teal-600", song.uppercase);
         btnToggleUppercase.classList.toggle("text-white", song.uppercase);
         updateStudioMonitors();
         updatePresentationUI();
