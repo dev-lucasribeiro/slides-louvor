@@ -480,19 +480,22 @@
         <div id="presSlideContent" class="w-full text-center"></div>
       </div>
 
-      <div id="presNextHintPill" class="hidden sm:block absolute bottom-4 right-6 bg-slate-950/60 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-full text-xs text-slate-400 font-medium max-w-xs truncate shadow-lg opacity-40 hover:opacity-100 transition-opacity">
+      <div id="presNextHintPill" class="hidden sm:block absolute bottom-4 right-6 bg-slate-950/60 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-full text-xs text-slate-400 font-medium max-w-xs truncate shadow-lg opacity-40 hover:opacity-100 transition-opacity pointer-events-none z-30">
         <span class="text-indigo-400 font-bold mr-1">Próx:</span>
         <span id="presNextHintText">...</span>
       </div>
 
-      <!-- Setas de navegação: no mobile posicionadas no rodapé (pb-5) para nunca tapar a letra -->
-      <div id="presLeftHotspot" class="absolute left-0 top-0 bottom-0 w-20 sm:w-28 flex items-end sm:items-center justify-start pl-3 sm:pl-6 pb-5 sm:pb-0 opacity-30 sm:opacity-0 hover:opacity-100 transition-opacity cursor-pointer z-20">
-        <div class="h-9 w-9 sm:h-12 sm:w-12 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/10 shadow-xl text-xs sm:text-base">
+      <!-- Zonas de clique amplas (Hotspots):
+           - 35% à esquerda: Voltar slide anterior
+           - 65% à direita (centro e direita): Avançar próximo slide (95% dos toques no culto são avanço)
+           As setas visuais permanecem elegantes nos cantos inferiores, sem tapar as letras. -->
+      <div id="presLeftHotspot" class="group absolute left-0 top-0 bottom-0 w-[35%] flex items-end sm:items-center justify-start pl-3 sm:pl-6 pb-5 sm:pb-0 cursor-pointer z-20 select-none" title="Voltar slide [Seta Esquerda]">
+        <div class="h-9 w-9 sm:h-12 sm:w-12 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/10 shadow-xl text-xs sm:text-base opacity-30 sm:opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
           <i class="fa-solid fa-chevron-left"></i>
         </div>
       </div>
-      <div id="presRightHotspot" class="absolute right-0 top-0 bottom-0 w-20 sm:w-28 flex items-end sm:items-center justify-end pr-3 sm:pr-6 pb-5 sm:pb-0 opacity-30 sm:opacity-0 hover:opacity-100 transition-opacity cursor-pointer z-20">
-        <div class="h-9 w-9 sm:h-12 sm:w-12 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/10 shadow-xl text-xs sm:text-base">
+      <div id="presRightHotspot" class="group absolute right-0 top-0 bottom-0 w-[65%] flex items-end sm:items-center justify-end pr-3 sm:pr-6 pb-5 sm:pb-0 cursor-pointer z-20 select-none" title="Avançar slide [Seta Direita / Espaço]">
+        <div class="h-9 w-9 sm:h-12 sm:w-12 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/10 shadow-xl text-xs sm:text-base opacity-30 sm:opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
